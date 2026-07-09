@@ -8,10 +8,5 @@ import { RouterOutlet } from '@angular/router';
   styleUrl: './app.css'
 })
 export class App {
-  protected readonly title = signal('KIS');
-  count = signal(0);
-
-  increment() {
-    this.count.update(value => value + 1);
-  }
+  protected readonly title = signal('HIS');
 }
