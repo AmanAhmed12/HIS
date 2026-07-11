@@ -1,0 +1,82 @@
+<div class="admin-layout">
+  <!-- Sidebar -->
+  <aside class="admin-sidebar">
+    <div class="sidebar-header">
+      <img src="/images/logo.png" alt="Logo" class="sidebar-logo">
+      <span class="sidebar-title">HIS Admin</span>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a [routerLink]="['/admin/dashboard']" class="nav-item" routerLinkActive="active">
+        <span class="nav-icon">📊</span>
+        <span>Dashboard</span>
+      </a>
+      <a [routerLink]="['/admin/dashboard/news']" class="nav-item" routerLinkActive="active">
+        <span class="nav-icon">📰</span>
+        <span>News & Events</span>
+      </a>
+      <a [routerLink]="['/admin/dashboard/gallery']" class="nav-item" routerLinkActive="active">
+        <span class="nav-icon">🖼️</span>
+        <span>Gallery</span>
+      </a>
+      <a [routerLink]="['/admin/dashboard/announcements']" class="nav-item" routerLinkActive="active">
+        <span class="nav-icon">📢</span>
+        <span>Announcements</span>
+      </a>
+      <a [routerLink]="['/admin/dashboard/school-info']" class="nav-item" routerLinkActive="active">
+        <span class="nav-icon">🏫</span>
+        <span>School Info</span>
+      </a>
+      <a [routerLink]="['/admin/dashboard/facilities']" class="nav-item" routerLinkActive="active">
+        <span class="nav-icon">🏢</span>
+        <span>Facilities</span>
+      </a>
+      <a [routerLink]="['/admin/dashboard/downloads']" class="nav-item" routerLinkActive="active">
+        <span class="nav-icon">📥</span>
+        <span>Downloads</span>
+      </a>
+      <a [routerLink]="['/admin/dashboard/achievements']" class="nav-item" routerLinkActive="active">
+        <span class="nav-icon">🏆</span>
+        <span>Achievements</span>
+      </a>
+      <a [routerLink]="['/admin/dashboard/contact']" class="nav-item" routerLinkActive="active">
+        <span class="nav-icon">✉️</span>
+        <span>Contact</span>
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="admin-info">
+        <div class="admin-avatar">A</div>
+        <span>Admin</span>
+      </div>
+      <button class="logout-btn" (click)="showLogoutConfirmation()">
+        <span>🚪</span>
+        <span>Logout</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="admin-main">
+    <router-outlet></router-outlet>
+  </main>
+</div>
+
+<!-- Logout Confirmation Modal -->
+@if (showLogoutModal()) {
+  <div class="modal-overlay" (click)="cancelLogout()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h3>Confirm Logout</h3>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure you want to logout from the admin panel?</p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-outline" (click)="cancelLogout()">Cancel</button>
+        <button class="btn btn-primary btn-danger" (click)="confirmLogout()">Logout</button>
+      </div>
+    </div>
+  </div>
+}

@@ -1,0 +1,115 @@
+.news-events-section {
+  @apply bg-gradient-to-br from-gray-50 to-gray-200;
+}
+
+.news-section,
+.events-section {
+  @apply mb-16;
+}
+
+.news-section h3,
+.events-section h3 {
+  @apply text-blue-900 mb-8 text-3xl font-semibold;
+}
+
+.news-grid {
+  @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8;
+}
+
+.news-card {
+  @apply bg-white rounded-2xl overflow-hidden shadow-lg transition-all duration-300;
+}
+
+.news-card:hover {
+  @apply -translate-y-2 shadow-xl;
+}
+
+.news-image {
+  @apply relative h-52 overflow-hidden;
+}
+
+.news-image img {
+  @apply w-full h-full object-cover;
+}
+
+.news-category {
+  @apply absolute top-4 right-4 bg-yellow-500 text-white px-3 py-1 rounded-full text-xs font-semibold;
+}
+
+.news-content {
+  @apply p-6;
+}
+
+.news-date {
+  @apply text-gray-500 text-sm mb-2;
+}
+
+.news-content h4 {
+  @apply text-blue-900 mb-3 text-xl font-semibold;
+}
+
+.news-content p {
+  @apply text-gray-600 leading-relaxed mb-4;
+}
+
+.btn-text {
+  @apply bg-none border-none text-yellow-600 font-semibold cursor-pointer p-0 transition-all duration-300;
+}
+
+.btn-text:hover {
+  @apply text-yellow-700;
+}
+
+.events-grid {
+  @apply grid grid-cols-1 md:grid-cols-2 gap-6;
+}
+
+.event-card {
+  @apply flex bg-white p-6 rounded-2xl shadow-lg transition-all duration-300 gap-6;
+}
+
+.event-card:hover {
+  @apply -translate-y-1 shadow-xl;
+}
+
+.event-date {
+  @apply min-w-20 h-20 bg-blue-900 text-white rounded-xl flex flex-col items-center justify-center text-center;
+}
+
+.event-month {
+  @apply text-sm font-semibold uppercase;
+}
+
+.event-day {
+  @apply text-2xl font-bold leading-none;
+}
+
+.event-details h4 {
+  @apply text-blue-900 mb-2 text-xl font-semibold;
+}
+
+.event-meta {
+  @apply flex gap-4 mb-3 text-sm text-gray-500;
+}
+
+.event-details p {
+  @apply text-gray-600 leading-relaxed;
+}
+
+@media (max-width: 768px) {
+  .news-grid {
+    @apply grid-cols-1;
+  }
+  
+  .events-grid {
+    @apply grid-cols-1;
+  }
+  
+  .event-card {
+    @apply flex-col items-center text-center;
+  }
+  
+  .event-meta {
+    @apply flex-col gap-2;
+  }
+}

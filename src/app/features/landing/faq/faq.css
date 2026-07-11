@@ -1,53 +1,32 @@
 .faq-section {
-  background-color: var(--bg-color);
+  @apply bg-gray-50;
 }
 
 .faq-header {
-  text-align: center;
-  margin-bottom: 4rem;
+  @apply text-center mb-16;
 }
 
 .faq-header h2 {
-  font-size: 2.5rem;
-  margin-bottom: 1rem;
+  @apply text-4xl lg:text-5xl mb-4 text-blue-900;
 }
 
 .faq-grid {
-  display: grid;
-  gap: 1.5rem;
-  max-width: 800px;
-  margin: 0 auto;
+  @apply grid gap-6 max-w-3xl mx-auto;
 }
 
 .faq-item {
-  background: var(--bg-surface);
-  border-radius: var(--border-radius);
-  padding: 1.5rem 2rem;
-  box-shadow: var(--shadow-sm);
-  border: 1px solid var(--border-color);
-  transition: var(--transition);
-  cursor: pointer;
+  @apply bg-white rounded-2xl p-6 lg:p-8 shadow-sm border border-gray-200 transition-all duration-300 cursor-pointer;
 }
 
 .faq-item:hover {
-  box-shadow: var(--shadow-md);
-  border-color: var(--secondary);
+  @apply shadow-md border-yellow-500;
 }
 
 .faq-question {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-weight: 600;
-  font-size: 1.1rem;
-  color: var(--primary);
+  @apply flex justify-between items-center font-semibold text-lg text-blue-900;
 }
 
 .faq-answer {
-  color: var(--text-muted);
-  line-height: 1.6;
-  margin-top: 1rem;
-  padding-top: 1rem;
-  border-top: 1px solid var(--border-color);
+  @apply text-gray-600 leading-relaxed mt-4 pt-4 border-t border-gray-200;
   /* For a real app, this would be toggled via angular state */
 }

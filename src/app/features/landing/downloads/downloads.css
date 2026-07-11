@@ -1,0 +1,109 @@
+.downloads-section {
+  @apply bg-gradient-to-br from-gray-50 to-gray-200;
+}
+
+.downloads-grid {
+  @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12;
+}
+
+.download-category {
+  @apply bg-white rounded-2xl overflow-hidden shadow-lg transition-all duration-300;
+}
+
+.download-category:hover {
+  @apply -translate-y-1 shadow-xl;
+}
+
+.category-header {
+  @apply bg-blue-900 text-white p-6 flex items-center gap-4;
+}
+
+.category-icon {
+  @apply text-3xl;
+}
+
+.category-header h3 {
+  @apply text-white m-0 text-xl font-semibold;
+}
+
+.category-files {
+  @apply p-6;
+}
+
+.file-item {
+  @apply flex items-center justify-between p-4 border-b border-gray-200 transition-all duration-300;
+}
+
+.file-item:hover {
+  @apply bg-gray-50;
+}
+
+.file-item:last-child {
+  @apply border-b-0;
+}
+
+.file-info {
+  @apply flex items-center gap-4 flex-1;
+}
+
+.file-icon {
+  @apply text-2xl min-w-8;
+}
+
+.file-details h4 {
+  @apply text-blue-900 m-0 mb-1 text-base font-medium;
+}
+
+.file-meta {
+  @apply flex gap-3 text-sm text-gray-500;
+}
+
+.file-type {
+  @apply bg-yellow-500 text-white px-2 py-0.5 rounded text-xs font-semibold;
+}
+
+.btn-download {
+  @apply bg-gray-50 border-2 border-gray-200 rounded-lg p-2 cursor-pointer transition-all duration-300 text-gray-700 flex items-center justify-center;
+}
+
+.btn-download:hover {
+  @apply bg-yellow-500 border-yellow-500 text-white;
+}
+
+.help-section {
+  @apply max-w-2xl mx-auto;
+}
+
+.help-card {
+  @apply bg-white p-8 rounded-2xl shadow-lg text-center;
+}
+
+.help-card h3 {
+  @apply text-blue-900 mb-4 text-2xl font-semibold;
+}
+
+.help-card p {
+  @apply text-gray-600 leading-relaxed mb-6;
+}
+
+.contact-info {
+  @apply flex justify-center gap-8 flex-wrap;
+}
+
+.contact-item {
+  @apply flex items-center gap-2 text-gray-700 font-medium;
+}
+
+.contact-icon {
+  @apply text-xl;
+}
+
+@media (max-width: 768px) {
+  .downloads-grid {
+    @apply grid-cols-1;
+  }
+  
+  .contact-info {
+    @apply flex-col gap-4;
+  }
+}

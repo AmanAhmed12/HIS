@@ -1,0 +1,114 @@
+<div class="admin-page">
+  <!-- Page Header -->
+  <div class="page-header">
+    <div>
+      <h1>📰 Manage News & Events</h1>
+      <p>Create and manage news articles and school events.</p>
+    </div>
+    <div class="header-actions">
+      <a routerLink="/admin/dashboard" class="btn btn-outline">← Dashboard</a>
+      @if (viewMode() === 'list') {
+        <button class="btn btn-primary" (click)="openCreateForm()">+ Add News</button>
+      }
+    </div>
+  </div>
+
+  <!-- Alerts -->
+  @if (successMessage()) {
+    <div class="alert alert-success">✅ {{ successMessage() }}</div>
+  }
+  @if (errorMessage()) {
+    <div class="alert alert-error">❌ {{ errorMessage() }}</div>
+  }
+
+  <!-- LIST VIEW -->
+  @if (viewMode() === 'list') {
+    @if (isLoading()) {
+      <div class="loading-state">Loading news...</div>
+    } @else if (newsList().length === 0) {
+      <div class="empty-state">
+        <div class="empty-icon">📰</div>
+        <h3>No news yet</h3>
+        <p>Click "Add News" to create your first article.</p>
+      </div>
+    } @else {
+      <div class="news-table-wrapper">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Type</th>
+              <th>Date</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (item of newsList(); track item.id) {
+              <tr>
+                <td>
+                  <strong>{{ item.title }}</strong>
+                  <small class="slug">{{ item.slug }}</small>
+                </td>
+                <td><span class="badge" [class]="item.type === 'NEWS' ? 'badge-blue' : 'badge-green'">{{ item.type }}</span></td>
+                <td>{{ item.eventDate || item.createdAt | date:'mediumDate' }}</td>
+                <td class="actions">
+                  <button class="btn-icon edit" (click)="openEditForm(item)" title="Edit">✏️</button>
+                  <button class="btn-icon delete" (click)="deleteItem(item)" title="Delete">🗑️</button>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+  }
+
+  <!-- FORM VIEW -->
+  @if (viewMode() === 'form') {
+    <div class="form-card">
+      <h2>{{ editingItem() ? 'Edit Article' : 'Create New Article' }}</h2>
+
+      <div class="form-grid">
+        <div class="form-group">
+          <label for="news-title">Title *</label>
+          <input id="news-title" type="text" class="form-control" [(ngModel)]="form.title" placeholder="Enter article title">
+        </div>
+
+        <div class="form-group">
+          <label for="news-slug">Slug (URL-friendly)</label>
+          <input id="news-slug" type="text" class="form-control" [(ngModel)]="form.slug" placeholder="e.g., annual-sports-day-2026">
+        </div>
+
+        <div class="form-group">
+          <label for="news-type">Type *</label>
+          <select id="news-type" class="form-control" [(ngModel)]="form.type">
+            <option value="NEWS">News</option>
+            <option value="EVENT">Event</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="news-date">Event Date</label>
+          <input id="news-date" type="date" class="form-control" [(ngModel)]="form.eventDate">
+        </div>
+
+        <div class="form-group full-width">
+          <label for="news-image">Image URL (from Cloudinary/S3)</label>
+          <input id="news-image" type="text" class="form-control" [(ngModel)]="form.imageUrl" placeholder="https://res.cloudinary.com/...">
+        </div>
+
+        <div class="form-group full-width">
+          <label for="news-content">Content *</label>
+          <textarea id="news-content" class="form-control" rows="8" [(ngModel)]="form.content" placeholder="Write the full article content here..."></textarea>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button class="btn btn-outline" (click)="cancelForm()">Cancel</button>
+        <button class="btn btn-primary" (click)="saveForm()" [disabled]="isSaving()">
+          {{ isSaving() ? 'Saving...' : (editingItem() ? 'Update Article' : 'Create Article') }}
+        </button>
+      </div>
+    </div>
+  }
+</div>

@@ -1,0 +1,186 @@
+<section id="admissions" class="section admissions-section">
+  <div class="container">
+    <div class="hero-subtitle text-center">Join Our Community</div>
+    <h2 class="text-center mb-4">Admissions</h2>
+    <p class="text-center mb-4" style="max-width: 800px; margin: 0 auto 3rem;">
+      Start your journey with Hill Country International School. We welcome students from diverse backgrounds who are eager to learn and grow.
+    </p>
+
+    <div class="admissions-grid">
+      <div class="admissions-info">
+        <h3>Admission Requirements</h3>
+        <div class="requirement-list">
+          <div class="requirement-item">
+            <div class="req-icon">📋</div>
+            <div class="req-content">
+              <h4>Completed Application Form</h4>
+              <p>Fill out the online application form with accurate information.</p>
+            </div>
+          </div>
+          <div class="requirement-item">
+            <div class="req-icon">📄</div>
+            <div class="req-content">
+              <h4>Previous School Records</h4>
+              <p>Academic transcripts and report cards from the previous 2 years.</p>
+            </div>
+          </div>
+          <div class="requirement-item">
+            <div class="req-icon">🎂</div>
+            <div class="req-content">
+              <h4>Birth Certificate</h4>
+              <p>Certified copy of the student's birth certificate.</p>
+            </div>
+          </div>
+          <div class="requirement-item">
+            <div class="req-icon">👨‍👩‍👧</div>
+            <div class="req-content">
+              <h4>Parent/Guardian ID</h4>
+              <p>Copy of national ID or passport of parent/guardian.</p>
+            </div>
+          </div>
+          <div class="requirement-item">
+            <div class="req-icon">💉</div>
+            <div class="req-content">
+              <h4>Medical Records</h4>
+              <p>Immunization records and any relevant medical information.</p>
+            </div>
+          </div>
+          <div class="requirement-item">
+            <div class="req-icon">📸</div>
+            <div class="req-content">
+              <h4>Passport Photos</h4>
+              <p>4 recent passport-sized photographs of the student.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-section">
+          <h3>Admission Timeline</h3>
+          <div class="timeline">
+            <div class="timeline-item">
+              <div class="timeline-date">January - March</div>
+              <div class="timeline-content">
+                <h4>Application Period</h4>
+                <p>Submit applications for the upcoming academic year.</p>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-date">April - May</div>
+              <div class="timeline-content">
+                <h4>Assessment & Interviews</h4>
+                <p>Entrance assessments and family interviews.</p>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-date">June</div>
+              <div class="timeline-content">
+                <h4>Admission Decisions</h4>
+                <p>Notification of admission decisions.</p>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-date">July - August</div>
+              <div class="timeline-content">
+                <h4>Enrollment</h4>
+                <p>Complete enrollment and prepare for the new academic year.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="admissions-form-container">
+        @if (submitted()) {
+          <div class="success-card">
+            <div class="success-icon">✅</div>
+            <h3>Application Submitted!</h3>
+            <p>Thank you for your interest in Hill Country International School. We will review your application and contact you within 5-7 business days.</p>
+            <button class="btn btn-outline" (click)="resetForm()">Submit Another Application</button>
+          </div>
+        } @else {
+          <div class="form-card">
+            <h3>Online Application</h3>
+            @if (errorMessage()) {
+              <div class="form-error">{{ errorMessage() }}</div>
+            }
+            <form class="admissions-form" (ngSubmit)="onSubmit()">
+              <div class="form-section">
+                <h4>Student Information</h4>
+                <div class="form-group">
+                  <label for="student-name">Student Full Name *</label>
+                  <input type="text" id="student-name" class="form-control" [(ngModel)]="form.studentName" name="studentName" placeholder="Enter student's full name" required>
+                </div>
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="dob">Date of Birth *</label>
+                    <input type="date" id="dob" class="form-control" [(ngModel)]="form.dateOfBirth" name="dateOfBirth" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="grade">Grade Applying For *</label>
+                    <select id="grade" class="form-control" [(ngModel)]="form.grade" name="grade" required>
+                      <option value="">Select Grade</option>
+                      <option value="1">Grade 1</option>
+                      <option value="2">Grade 2</option>
+                      <option value="3">Grade 3</option>
+                      <option value="4">Grade 4</option>
+                      <option value="5">Grade 5</option>
+                      <option value="6">Grade 6</option>
+                      <option value="7">Grade 7</option>
+                      <option value="8">Grade 8</option>
+                      <option value="9">Grade 9</option>
+                      <option value="10">Grade 10</option>
+                      <option value="11">Grade 11</option>
+                      <option value="12">Grade 12</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-section">
+                <h4>Parent/Guardian Information</h4>
+                <div class="form-group">
+                  <label for="parent-name">Parent/Guardian Name *</label>
+                  <input type="text" id="parent-name" class="form-control" [(ngModel)]="form.parentName" name="parentName" placeholder="Enter parent/guardian name" required>
+                </div>
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="email">Email Address *</label>
+                    <input type="email" id="email" class="form-control" [(ngModel)]="form.email" name="email" placeholder="your@email.com" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="phone">Phone Number *</label>
+                    <input type="tel" id="phone" class="form-control" [(ngModel)]="form.phone" name="phone" placeholder="+94 XX XXX XXXX" required>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="address">Residential Address</label>
+                  <textarea id="address" class="form-control" [(ngModel)]="form.address" name="address" rows="2" placeholder="Enter full address"></textarea>
+                </div>
+              </div>
+
+              <div class="form-section">
+                <h4>Additional Information</h4>
+                <div class="form-group">
+                  <label for="previous-school">Previous School</label>
+                  <input type="text" id="previous-school" class="form-control" [(ngModel)]="form.previousSchool" name="previousSchool" placeholder="Name of previous school">
+                </div>
+                <div class="form-group">
+                  <label for="special-needs">Special Needs or Requirements</label>
+                  <textarea id="special-needs" class="form-control" [(ngModel)]="form.specialNeeds" name="specialNeeds" rows="2" placeholder="Any special educational needs or requirements"></textarea>
+                </div>
+                <div class="form-group">
+                  <label for="message">Additional Message</label>
+                  <textarea id="message" class="form-control" [(ngModel)]="form.message" name="message" rows="3" placeholder="Any other information you'd like to share"></textarea>
+                </div>
+              </div>
+
+              <button type="submit" class="btn btn-primary" style="width: 100%" [disabled]="isSubmitting()">
+                {{ isSubmitting() ? 'Submitting...' : 'Submit Application' }}
+              </button>
+            </form>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+</section>

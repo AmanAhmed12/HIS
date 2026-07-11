@@ -1,96 +1,64 @@
 .hero-section {
-  position: relative;
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
+  @apply relative min-h-screen flex items-center;
   background-image: linear-gradient(rgba(10, 31, 68, 0.7), rgba(10, 31, 68, 0.8)), url('/images/hero-bg.png');
-  background-size: cover;
-  background-position: center;
-  color: #fff;
+  @apply bg-cover bg-center text-white;
   padding-top: 80px; /* Offset for navbar */
 }
 
 .hero-content {
-  max-width: 800px;
+  @apply max-w-2xl;
   animation: fadeIn 1s ease-out;
 }
 
 .hero-subtitle {
+  @apply font-semibold uppercase tracking-wider text-yellow-500 mb-4;
   font-family: 'Inter', sans-serif;
-  font-weight: 600;
-  text-transform: uppercase;
   letter-spacing: 2px;
-  color: var(--secondary);
-  margin-bottom: 1rem;
 }
 
 .hero-title {
-  font-size: 4rem;
-  color: #fff;
-  margin-bottom: 1.5rem;
+  @apply text-5xl md:text-6xl lg:text-7xl text-white mb-6;
   line-height: 1.1;
 }
 
 .hero-description {
-  font-size: 1.25rem;
-  color: rgba(255, 255, 255, 0.9);
-  margin-bottom: 2.5rem;
-  line-height: 1.6;
+  @apply text-xl text-white/90 mb-10 leading-relaxed;
 }
 
 .hero-buttons {
-  display: flex;
-  gap: 1rem;
+  @apply flex gap-4 flex-wrap;
+  margin-bottom: 3rem;
 }
 
 .hero-buttons .btn-outline {
-  color: #fff;
-  border-color: #fff;
-}
-
-.hero-buttons .btn-outline:hover {
-  background-color: #fff;
-  color: var(--primary);
+  @apply text-white border-white hover:bg-white hover:text-blue-900;
 }
 
 /* Features Grid */
 .features-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2rem;
+  @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8;
   margin-top: -80px;
-  position: relative;
-  z-index: 10;
-  padding-bottom: 4rem;
+  @apply relative z-10 pb-16;
 }
 
 .feature-card {
-  background: var(--bg-surface);
-  border-radius: var(--border-radius);
-  padding: 2.5rem;
-  box-shadow: var(--shadow-lg);
-  border-top: 4px solid var(--secondary);
-  transition: var(--transition);
+  @apply bg-white rounded-2xl p-10 shadow-xl border-t-4 border-yellow-500 transition-all duration-300;
 }
 
 .feature-card:hover {
-  transform: translateY(-10px);
+  @apply -translate-y-2 shadow-2xl;
 }
 
 .feature-icon {
-  font-size: 2.5rem;
-  color: var(--primary);
-  margin-bottom: 1.5rem;
+  @apply text-4xl text-blue-900 mb-6;
 }
 
 .feature-title {
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
+  @apply text-2xl mb-4 text-blue-900 font-semibold;
 }
 
 .feature-text {
-  color: var(--text-muted);
-  line-height: 1.6;
+  @apply text-gray-600 leading-relaxed;
 }
 
 @keyframes fadeIn {
@@ -100,7 +68,7 @@
 
 @media (max-width: 768px) {
   .hero-title {
-    font-size: 2.5rem;
+    @apply text-4xl;
   }
   .features-grid {
     margin-top: 2rem;

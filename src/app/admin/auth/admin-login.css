@@ -1,0 +1,59 @@
+.login-page {
+  @apply min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-900 to-blue-800;
+}
+
+.login-card {
+  @apply bg-white rounded-3xl p-12 w-full max-w-md shadow-2xl text-center;
+}
+
+.login-logo {
+  @apply h-20 mb-4;
+}
+
+.login-header h1 {
+  @apply text-2xl mb-1;
+}
+
+.login-header p {
+  @apply text-gray-600 mb-8;
+}
+
+.login-form {
+  @apply text-left;
+}
+
+.form-group {
+  @apply mb-5;
+}
+
+.form-group label {
+  @apply block font-semibold mb-2 text-gray-800;
+}
+
+.form-control {
+  @apply w-full px-4 py-3.5 border-2 border-gray-300 rounded-xl text-base transition-all duration-300;
+}
+
+.form-control:focus {
+  @apply outline-none border-blue-900 shadow-[0_0_0_3px_rgba(10,31,68,0.1)];
+}
+
+.login-btn {
+  @apply w-full mt-2 rounded-xl py-4 text-base;
+}
+
+.alert {
+  @apply p-3.5 rounded-lg mb-4 text-sm;
+}
+
+.alert-error {
+  @apply bg-red-100 text-red-600 border border-red-300;
+}
+
+.back-link {
+  @apply inline-block mt-6 text-gray-600 text-sm transition-all duration-300;
+}
+
+.back-link:hover {
+  @apply text-blue-900;
+}

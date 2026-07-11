@@ -1,0 +1,95 @@
+<div class="admin-page">
+  <!-- Page Header -->
+  <div class="page-header">
+    <div>
+      <h1>🏫 Manage School Info</h1>
+      <p>Update school information, contact details, and general settings.</p>
+    </div>
+    <div class="header-actions">
+      <a routerLink="/admin/dashboard" class="btn btn-outline">← Dashboard</a>
+      <button class="btn btn-primary">Save Changes</button>
+    </div>
+  </div>
+
+  <!-- School Info Form -->
+  <div class="form-section">
+    <h2>Basic Information</h2>
+    <div class="form-grid">
+      <div class="form-group">
+        <label for="school-name">School Name *</label>
+        <input id="school-name" type="text" class="form-control" value="Hill Country International School">
+      </div>
+      <div class="form-group">
+        <label for="school-code">School Code</label>
+        <input id="school-code" type="text" class="form-control" value="HIS-2004">
+      </div>
+      <div class="form-group">
+        <label for="established-year">Established Year</label>
+        <input id="established-year" type="number" class="form-control" value="2004">
+      </div>
+      <div class="form-group">
+        <label for="school-type">School Type</label>
+        <select id="school-type" class="form-control">
+          <option value="international" selected>International School</option>
+          <option value="private">Private School</option>
+          <option value="public">Public School</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <!-- Contact Information -->
+  <div class="form-section">
+    <h2>Contact Information</h2>
+    <div class="form-grid">
+      <div class="form-group full-width">
+        <label for="address">Address *</label>
+        <input id="address" type="text" class="form-control" value="Madawala Bazaar, Kandy, Sri Lanka">
+      </div>
+      <div class="form-group">
+        <label for="phone">Phone Number *</label>
+        <input id="phone" type="tel" class="form-control" value="+94 81 234 5678">
+      </div>
+      <div class="form-group">
+        <label for="email">Email Address *</label>
+        <input id="email" type="email" class="form-control" value="info@hillcountryschool.lk">
+      </div>
+      <div class="form-group">
+        <label for="website">Website</label>
+        <input id="website" type="url" class="form-control" value="https://www.hillcountryschool.lk">
+      </div>
+    </div>
+  </div>
+
+  <!-- Social Media -->
+  <div class="form-section">
+    <h2>Social Media</h2>
+    <div class="form-grid">
+      <div class="form-group">
+        <label for="facebook">Facebook URL</label>
+        <input id="facebook" type="url" class="form-control" placeholder="https://facebook.com/...">
+      </div>
+      <div class="form-group">
+        <label for="instagram">Instagram URL</label>
+        <input id="instagram" type="url" class="form-control" placeholder="https://instagram.com/...">
+      </div>
+      <div class="form-group">
+        <label for="twitter">Twitter URL</label>
+        <input id="twitter" type="url" class="form-control" placeholder="https://twitter.com/...">
+      </div>
+      <div class="form-group">
+        <label for="youtube">YouTube URL</label>
+        <input id="youtube" type="url" class="form-control" placeholder="https://youtube.com/...">
+      </div>
+    </div>
+  </div>
+
+  <!-- About Section -->
+  <div class="form-section">
+    <h2>About School</h2>
+    <div class="form-group full-width">
+      <label for="description">School Description</label>
+      <textarea id="description" class="form-control" rows="6" placeholder="Enter school description...">Hill Country International School, established in 2004, is a premier educational institution in Madawala Bazaar, Sri Lanka. We are proud members of the Association of International Schools in Sri Lanka (AISL) and offer a world-class international curriculum.</textarea>
+    </div>
+  </div>
+</div>

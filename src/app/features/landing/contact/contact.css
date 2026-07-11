@@ -1,94 +1,98 @@
 .contact-section {
-  background-color: var(--primary);
-  color: #fff;
+  @apply bg-blue-900 text-white;
 }
 
 .contact-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 4rem;
+  @apply grid grid-cols-1 lg:grid-cols-2 gap-16;
 }
 
 .contact-info h2 {
-  font-size: 2.5rem;
-  margin-bottom: 1.5rem;
-  color: #fff;
+  @apply text-4xl lg:text-5xl mb-6 text-white;
 }
 
 .contact-info p {
-  color: rgba(255, 255, 255, 0.8);
-  margin-bottom: 2rem;
-  line-height: 1.6;
+  @apply text-white/80 mb-8 leading-relaxed;
 }
 
 .info-item {
-  display: flex;
-  align-items: flex-start;
-  gap: 1rem;
-  margin-bottom: 1.5rem;
+  @apply flex items-start gap-4 mb-6;
 }
 
 .info-icon {
-  font-size: 1.5rem;
-  color: var(--secondary);
+  @apply text-2xl text-yellow-500;
 }
 
 .info-details h4 {
-  margin-bottom: 0.25rem;
-  color: #fff;
+  @apply mb-1 text-white font-semibold;
 }
 
 .info-details p {
-  margin-bottom: 0;
-  color: rgba(255, 255, 255, 0.7);
+  @apply mb-0 text-white/70;
 }
 
 /* Form Styles */
 .contact-form {
-  background: var(--bg-surface);
-  padding: 3rem;
-  border-radius: var(--border-radius);
-  box-shadow: var(--shadow-xl);
+  @apply bg-white p-12 rounded-2xl shadow-xl;
 }
 
 .form-group {
-  margin-bottom: 1.5rem;
+  @apply mb-6;
 }
 
 .form-group label {
-  display: block;
-  margin-bottom: 0.5rem;
-  color: var(--text-main);
-  font-weight: 500;
+  @apply block mb-2 text-gray-700 font-medium;
 }
 
 .form-control {
-  width: 100%;
-  padding: 0.875rem 1rem;
-  border: 1px solid var(--border-color);
-  border-radius: 8px;
-  font-family: inherit;
-  font-size: 1rem;
-  transition: var(--transition);
+  @apply w-full px-4 py-3.5 border border-gray-300 rounded-lg text-base transition-all duration-300;
+}
+
+.form-control.error {
+  @apply border-red-500;
+}
+
+.form-control.error:focus {
+  @apply outline-none border-red-500 shadow-[0_0_0_3px_rgba(239,68,68,0.1)];
 }
 
 .form-control:focus {
-  outline: none;
-  border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(10, 31, 68, 0.1);
+  @apply outline-none border-blue-900 shadow-[0_0_0_3px_rgba(10,31,68,0.1)];
+}
+
+.error-text {
+  @apply text-red-500 text-sm mt-1 block;
 }
 
 textarea.form-control {
-  min-height: 120px;
-  resize: vertical;
+  @apply min-h-[120px] resize-y;
 }
 
 .contact-form .btn-primary {
-  width: 100%;
+  @apply w-full;
+}
+
+.success-card {
+  @apply bg-white p-12 rounded-2xl shadow-xl text-center;
+}
+
+.success-icon {
+  @apply text-6xl mb-4;
+}
+
+.success-card h3 {
+  @apply text-blue-900 mb-4 text-2xl font-semibold;
+}
+
+.success-card p {
+  @apply text-gray-600 leading-relaxed mb-8;
+}
+
+.form-error {
+  @apply bg-red-100 text-red-600 p-3 rounded-lg mb-4 text-sm;
 }
 
 @media (max-width: 992px) {
   .contact-grid {
-    grid-template-columns: 1fr;
+    @apply grid-cols-1;
   }
 }

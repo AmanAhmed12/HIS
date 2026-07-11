@@ -1,61 +1,43 @@
 .gallery-section {
-  background-color: var(--bg-surface);
+  @apply bg-white;
 }
 
 .gallery-header {
-  margin-bottom: 4rem;
+  @apply mb-16;
 }
 
 .gallery-header h2 {
-  font-size: 2.5rem;
-  margin-bottom: 1rem;
+  @apply text-4xl lg:text-5xl mb-4 text-blue-900;
 }
 
 .gallery-header p {
-  color: var(--text-muted);
-  font-size: 1.1rem;
-  max-width: 600px;
-  margin: 0 auto;
+  @apply text-gray-600 text-lg max-w-2xl mx-auto;
 }
 
 .gallery-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2rem;
+  @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8;
 }
 
 .gallery-card {
-  background: var(--bg-color);
-  border-radius: var(--border-radius);
-  overflow: hidden;
-  box-shadow: var(--shadow-md);
-  transition: var(--transition);
+  @apply bg-gray-50 rounded-2xl overflow-hidden shadow-lg transition-all duration-300;
 }
 
 .gallery-card:hover {
-  transform: translateY(-8px);
-  box-shadow: var(--shadow-lg);
+  @apply -translate-y-2 shadow-xl;
 }
 
 .gallery-img {
-  width: 100%;
-  height: 250px;
-  object-fit: cover;
-  display: block;
+  @apply w-full h-64 object-cover;
 }
 
 .gallery-info {
-  padding: 1.5rem;
+  @apply p-6;
 }
 
 .gallery-info h3 {
-  font-size: 1.25rem;
-  margin-bottom: 0.5rem;
-  color: var(--primary);
+  @apply text-xl mb-2 text-blue-900 font-semibold;
 }
 
 .gallery-info p {
-  color: var(--text-muted);
-  font-size: 0.95rem;
-  line-height: 1.5;
+  @apply text-gray-600 text-base leading-relaxed;
 }

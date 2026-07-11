@@ -1,0 +1,60 @@
+<section id="downloads" class="section downloads-section">
+  <div class="container">
+    <div class="hero-subtitle text-center">Resources</div>
+    <h2 class="text-center mb-4">Downloads</h2>
+    <p class="text-center mb-4" style="max-width: 800px; margin: 0 auto 3rem;">
+      Access important forms, documents, and resources for students and parents.
+    </p>
+
+    <div class="downloads-grid">
+      @for (category of downloadCategories; track category.category) {
+        <div class="download-category">
+          <div class="category-header">
+            <div class="category-icon">{{ category.icon }}</div>
+            <h3>{{ category.category }}</h3>
+          </div>
+          <div class="category-files">
+            @for (file of category.files; track file.name) {
+              <div class="file-item">
+                <div class="file-info">
+                  <div class="file-icon">📄</div>
+                  <div class="file-details">
+                    <h4>{{ file.name }}</h4>
+                    <div class="file-meta">
+                      <span class="file-type">{{ file.type }}</span>
+                      <span class="file-size">{{ file.size }}</span>
+                    </div>
+                  </div>
+                </div>
+                <button class="btn-download" (click)="downloadFile(file)" aria-label="Download {{ file.name }}">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                    <polyline points="7 10 12 15 17 10"></polyline>
+                    <line x1="12" y1="15" x2="12" y2="3"></line>
+                  </svg>
+                </button>
+              </div>
+            }
+          </div>
+        </div>
+      }
+    </div>
+
+    <div class="help-section">
+      <div class="help-card">
+        <h3>Need Help?</h3>
+        <p>If you cannot find the document you need or have trouble downloading files, please contact our administration office.</p>
+        <div class="contact-info">
+          <div class="contact-item">
+            <span class="contact-icon">📞</span>
+            <span>081 247 6600</span>
+          </div>
+          <div class="contact-item">
+            <span class="contact-icon">✉️</span>
+            <span>hillcountryintl03@yahoo.com</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
