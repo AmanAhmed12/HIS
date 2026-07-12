@@ -93,8 +93,25 @@
         </div>
 
         <div class="form-group full-width">
-          <label for="news-image">Image URL (from Cloudinary/S3)</label>
-          <input id="news-image" type="text" class="form-control" [(ngModel)]="form.imageUrl" placeholder="https://res.cloudinary.com/...">
+          <label for="news-image">Image *</label>
+          <div class="image-upload-section">
+            @if (form.imageUrl) {
+              <div class="image-preview">
+                <img [src]="form.imageUrl" alt="Preview">
+                <button type="button" class="btn-remove-image" (click)="form.imageUrl = ''">✕</button>
+              </div>
+            }
+            <input
+              type="file"
+              id="news-image"
+              (change)="onFileSelected($event)"
+              accept="image/*"
+              class="file-input"
+            >
+            @if (isUploading()) {
+              <span class="upload-status">Uploading...</span>
+            }
+          </div>
         </div>
 
         <div class="form-group full-width">

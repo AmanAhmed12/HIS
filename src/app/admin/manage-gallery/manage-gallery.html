@@ -7,60 +7,140 @@
     </div>
     <div class="header-actions">
       <a routerLink="/admin/dashboard" class="btn btn-outline">← Dashboard</a>
-      <button class="btn btn-primary">+ Upload Image</button>
+      @if (viewMode() === 'list') {
+        <button class="btn btn-primary" (click)="openCreateForm()">+ Upload Image</button>
+      }
     </div>
   </div>
 
-  <!-- Upload Section -->
-  <div class="upload-section">
-    <div class="upload-area">
-      <div class="upload-icon">📤</div>
-      <h3>Drag & Drop Images</h3>
-      <p>or click to browse files</p>
-      <button class="btn btn-secondary">Select Files</button>
-    </div>
-  </div>
+  <!-- Messages -->
+  @if (errorMessage()) {
+    <div class="alert alert-error">{{ errorMessage() }}</div>
+  }
+  @if (successMessage()) {
+    <div class="alert alert-success">{{ successMessage() }}</div>
+  }
 
-  <!-- Gallery Grid -->
-  <div class="gallery-grid">
-    <div class="gallery-item">
-      <div class="gallery-image">
-        <img src="/images/gallery1.jpg" alt="Gallery Image">
-        <div class="gallery-overlay">
-          <button class="btn-icon edit">✏️</button>
-          <button class="btn-icon delete">🗑️</button>
+  <!-- List View -->
+  @if (viewMode() === 'list') {
+    @if (isLoading()) {
+      <div class="loading-state">
+        <div class="spinner"></div>
+        <p>Loading gallery...</p>
+      </div>
+    } @else if (galleryList().length === 0) {
+      <div class="empty-state">
+        <div class="empty-icon">�️</div>
+        <h3>No images yet</h3>
+        <p>Start by uploading your first image.</p>
+        <button class="btn btn-primary" (click)="openCreateForm()">+ Upload Image</button>
+      </div>
+    } @else {
+      <div class="gallery-grid">
+        @for (item of galleryList(); track item.id) {
+          <div class="gallery-item" [class.inactive]="!item.isActive">
+            <div class="gallery-image">
+              <img [src]="item.imageUrl" [alt]="item.title">
+              <div class="gallery-overlay">
+                <button class="btn-icon edit" (click)="openEditForm(item)" title="Edit">✏️</button>
+                <button class="btn-icon delete" (click)="deleteItem(item)" title="Delete">🗑️</button>
+              </div>
+            </div>
+            <div class="gallery-info">
+              <h4>{{ item.title }}</h4>
+              <p>{{ item.category }}</p>
+            </div>
+          </div>
+        }
+      </div>
+    }
+  }
+
+  <!-- Form View -->
+  @if (viewMode() === 'form') {
+    <div class="form-container">
+      <div class="form-header">
+        <h2>{{ editingItem() ? 'Edit Gallery Item' : 'Upload New Image' }}</h2>
+        <button class="btn btn-outline" (click)="cancelForm()">Cancel</button>
+      </div>
+
+      <form (submit)="saveForm()" class="gallery-form">
+        <div class="form-group">
+          <label for="title">Title *</label>
+          <input
+            type="text"
+            id="title"
+            [(ngModel)]="form.title"
+            name="title"
+            required
+            placeholder="Enter image title"
+          >
         </div>
-      </div>
-      <div class="gallery-info">
-        <h4>Sports Day 2024</h4>
-        <p>Annual Sports Day</p>
-      </div>
-    </div>
-    <div class="gallery-item">
-      <div class="gallery-image">
-        <img src="/images/gallery2.jpg" alt="Gallery Image">
-        <div class="gallery-overlay">
-          <button class="btn-icon edit">✏️</button>
-          <button class="btn-icon delete">🗑️</button>
+
+        <div class="form-group">
+          <label for="category">Category</label>
+          <input
+            type="text"
+            id="category"
+            [(ngModel)]="form.category"
+            name="category"
+            placeholder="e.g., Events, Sports, Academic"
+          >
         </div>
-      </div>
-      <div class="gallery-info">
-        <h4>Science Fair</h4>
-        <p>Student Projects</p>
-      </div>
-    </div>
-    <div class="gallery-item">
-      <div class="gallery-image">
-        <img src="/images/gallery3.jpg" alt="Gallery Image">
-        <div class="gallery-overlay">
-          <button class="btn-icon edit">✏️</button>
-          <button class="btn-icon delete">🗑️</button>
+
+        <div class="form-group">
+          <label for="description">Description *</label>
+          <textarea
+            id="description"
+            [(ngModel)]="form.description"
+            name="description"
+            required
+            rows="4"
+            placeholder="Describe the image"
+          ></textarea>
         </div>
-      </div>
-      <div class="gallery-info">
-        <h4>Cultural Day</h4>
-        <p>International Day Celebration</p>
-      </div>
+
+        <div class="form-group">
+          <label for="image">Image *</label>
+          <div class="image-upload-section">
+            @if (form.imageUrl) {
+              <div class="image-preview">
+                <img [src]="form.imageUrl" alt="Preview">
+                <button type="button" class="btn-remove-image" (click)="form.imageUrl = ''">✕</button>
+              </div>
+            }
+            <input
+              type="file"
+              id="image"
+              (change)="onFileSelected($event)"
+              accept="image/*"
+              class="file-input"
+              required
+            >
+            @if (isUploading()) {
+              <span class="upload-status">Uploading...</span>
+            }
+          </div>
+        </div>
+
+        <div class="form-group checkbox-group">
+          <label class="checkbox-label">
+            <input
+              type="checkbox"
+              [(ngModel)]="form.isActive"
+              name="isActive"
+            >
+            <span>Active</span>
+          </label>
+        </div>
+
+        <div class="form-actions">
+          <button type="button" class="btn btn-outline" (click)="cancelForm()">Cancel</button>
+          <button type="submit" class="btn btn-primary" [disabled]="isSaving()">
+            {{ isSaving() ? 'Saving...' : (editingItem() ? 'Update Image' : 'Upload Image') }}
+          </button>
+        </div>
+      </form>
     </div>
-  </div>
+  }
 </div>

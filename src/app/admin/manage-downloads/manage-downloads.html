@@ -7,90 +7,141 @@
     </div>
     <div class="header-actions">
       <a routerLink="/admin/dashboard" class="btn btn-outline">← Dashboard</a>
-      <button class="btn btn-primary">+ Upload File</button>
+      @if (viewMode() === 'list') {
+        <button class="btn btn-primary" (click)="openCreateForm()">+ Upload File</button>
+      }
     </div>
   </div>
 
-  <!-- Download Categories -->
-  <div class="downloads-section">
-    <div class="category-header">
-      <h2>Admission Forms</h2>
-      <button class="btn-icon add">➕</button>
-    </div>
-    <div class="downloads-list">
-      <div class="download-item">
-        <div class="file-icon">📄</div>
-        <div class="file-info">
-          <h4>Application Form 2024-2025</h4>
-          <p>PDF • 2.5 MB</p>
-        </div>
-        <div class="file-actions">
-          <button class="btn-icon edit">✏️</button>
-          <button class="btn-icon delete">🗑️</button>
-        </div>
-      </div>
-      <div class="download-item">
-        <div class="file-icon">📄</div>
-        <div class="file-info">
-          <h4>Medical Form</h4>
-          <p>PDF • 1.2 MB</p>
-        </div>
-        <div class="file-actions">
-          <button class="btn-icon edit">✏️</button>
-          <button class="btn-icon delete">🗑️</button>
-        </div>
-      </div>
-    </div>
-  </div>
+  <!-- Messages -->
+  @if (errorMessage()) {
+    <div class="alert alert-error">{{ errorMessage() }}</div>
+  }
+  @if (successMessage()) {
+    <div class="alert alert-success">{{ successMessage() }}</div>
+  }
 
-  <div class="downloads-section">
-    <div class="category-header">
-      <h2>Academic Resources</h2>
-      <button class="btn-icon add">➕</button>
-    </div>
-    <div class="downloads-list">
-      <div class="download-item">
-        <div class="file-icon">📚</div>
-        <div class="file-info">
-          <h4>Student Handbook 2024</h4>
-          <p>PDF • 5.3 MB</p>
-        </div>
-        <div class="file-actions">
-          <button class="btn-icon edit">✏️</button>
-          <button class="btn-icon delete">🗑️</button>
-        </div>
+  <!-- List View -->
+  @if (viewMode() === 'list') {
+    @if (isLoading()) {
+      <div class="loading-state">
+        <div class="spinner"></div>
+        <p>Loading downloads...</p>
       </div>
-      <div class="download-item">
-        <div class="file-icon">📚</div>
-        <div class="file-info">
-          <h4>Curriculum Guide - Primary</h4>
-          <p>PDF • 3.1 MB</p>
-        </div>
-        <div class="file-actions">
-          <button class="btn-icon edit">✏️</button>
-          <button class="btn-icon delete">🗑️</button>
-        </div>
+    } @else if (downloadList().length === 0) {
+      <div class="empty-state">
+        <div class="empty-icon">📥</div>
+        <h3>No downloads yet</h3>
+        <p>Start by uploading your first file.</p>
+        <button class="btn btn-primary" (click)="openCreateForm()">+ Upload File</button>
       </div>
-    </div>
-  </div>
+    } @else {
+      <div class="downloads-list">
+        @for (download of downloadList(); track download.id) {
+          <div class="download-item" [class.inactive]="!download.isActive">
+            <div class="file-icon">{{ getFileIcon(download.fileType) }}</div>
+            <div class="file-info">
+              <h4>{{ download.title }}</h4>
+              <p>{{ download.fileType }} • {{ formatFileSize(download.fileSize || 0) }}</p>
+              @if (download.category) {
+                <span class="file-category">{{ download.category }}</span>
+              }
+            </div>
+            <div class="file-actions">
+              <button class="btn-icon edit" (click)="openEditForm(download)" title="Edit">✏️</button>
+              <button class="btn-icon delete" (click)="deleteItem(download)" title="Delete">🗑️</button>
+            </div>
+          </div>
+        }
+      </div>
+    }
+  }
 
-  <div class="downloads-section">
-    <div class="category-header">
-      <h2>School Policies</h2>
-      <button class="btn-icon add">➕</button>
-    </div>
-    <div class="downloads-list">
-      <div class="download-item">
-        <div class="file-icon">📋</div>
-        <div class="file-info">
-          <h4>Code of Conduct</h4>
-          <p>PDF • 1.8 MB</p>
-        </div>
-        <div class="file-actions">
-          <button class="btn-icon edit">✏️</button>
-          <button class="btn-icon delete">🗑️</button>
-        </div>
+  <!-- Form View -->
+  @if (viewMode() === 'form') {
+    <div class="form-container">
+      <div class="form-header">
+        <h2>{{ editingItem() ? 'Edit Download' : 'Upload New File' }}</h2>
+        <button class="btn btn-outline" (click)="cancelForm()">Cancel</button>
       </div>
+
+      <form (submit)="saveForm()" class="download-form">
+        <div class="form-group">
+          <label for="title">Title *</label>
+          <input
+            type="text"
+            id="title"
+            [(ngModel)]="form.title"
+            name="title"
+            required
+            placeholder="Enter file title"
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="fileUrl">File URL *</label>
+          <input
+            type="url"
+            id="fileUrl"
+            [(ngModel)]="form.fileUrl"
+            name="fileUrl"
+            required
+            placeholder="Enter file URL (Cloudinary or other storage)"
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="fileType">File Type</label>
+          <select id="fileType" [(ngModel)]="form.fileType" name="fileType" class="form-select">
+            <option value="PDF">PDF</option>
+            <option value="DOC">Word Document</option>
+            <option value="XLS">Excel Spreadsheet</option>
+            <option value="ZIP">ZIP Archive</option>
+            <option value="IMAGE">Image</option>
+            <option value="OTHER">Other</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="category">Category</label>
+          <input
+            type="text"
+            id="category"
+            [(ngModel)]="form.category"
+            name="category"
+            placeholder="e.g., Admission Forms, Academic Resources"
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="description">Description</label>
+          <textarea
+            id="description"
+            [(ngModel)]="form.description"
+            name="description"
+            rows="3"
+            placeholder="Enter file description"
+          ></textarea>
+        </div>
+
+        <div class="form-group checkbox-group">
+          <label class="checkbox-label">
+            <input
+              type="checkbox"
+              [(ngModel)]="form.isActive"
+              name="isActive"
+            >
+            <span>Active</span>
+          </label>
+        </div>
+
+        <div class="form-actions">
+          <button type="button" class="btn btn-outline" (click)="cancelForm()">Cancel</button>
+          <button type="submit" class="btn btn-primary" [disabled]="isSaving()">
+            {{ isSaving() ? 'Saving...' : (editingItem() ? 'Update Download' : 'Upload File') }}
+          </button>
+        </div>
+      </form>
     </div>
-  </div>
+  }
 </div>

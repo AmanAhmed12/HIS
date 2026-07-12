@@ -7,70 +7,139 @@
     </div>
     <div class="header-actions">
       <a routerLink="/admin/dashboard" class="btn btn-outline">← Dashboard</a>
-      <button class="btn btn-primary">+ Add Facility</button>
+      @if (viewMode() === 'list') {
+        <button class="btn btn-primary" (click)="openCreateForm()">+ Add Facility</button>
+      }
     </div>
   </div>
 
-  <!-- Facilities List -->
-  <div class="facilities-grid">
-    <div class="facility-card">
-      <div class="facility-icon">🏫</div>
-      <h3>Main Building</h3>
-      <p>Primary and secondary classrooms, administrative offices</p>
-      <div class="facility-actions">
-        <button class="btn-icon edit">✏️</button>
-        <button class="btn-icon delete">🗑️</button>
-      </div>
-    </div>
+  <!-- Messages -->
+  @if (errorMessage()) {
+    <div class="alert alert-error">{{ errorMessage() }}</div>
+  }
+  @if (successMessage()) {
+    <div class="alert alert-success">{{ successMessage() }}</div>
+  }
 
-    <div class="facility-card">
-      <div class="facility-icon">🏊</div>
-      <h3>Swimming Pool</h3>
-      <p>Olympic-sized swimming pool with changing rooms</p>
-      <div class="facility-actions">
-        <button class="btn-icon edit">✏️</button>
-        <button class="btn-icon delete">🗑️</button>
+  <!-- List View -->
+  @if (viewMode() === 'list') {
+    @if (isLoading()) {
+      <div class="loading-state">
+        <div class="spinner"></div>
+        <p>Loading facilities...</p>
       </div>
-    </div>
+    } @else if (facilityList().length === 0) {
+      <div class="empty-state">
+        <div class="empty-icon">🏢</div>
+        <h3>No facilities yet</h3>
+        <p>Start by adding your first facility.</p>
+        <button class="btn btn-primary" (click)="openCreateForm()">+ Add Facility</button>
+      </div>
+    } @else {
+      <div class="facilities-grid">
+        @for (facility of facilityList(); track facility.id) {
+          <div class="facility-card" [class.inactive]="!facility.isActive">
+            @if (facility.imageUrl) {
+              <img [src]="facility.imageUrl" alt="" class="facility-image">
+            } @else {
+              <div class="facility-icon">{{ facility.icon || '�' }}</div>
+            }
+            <h3>{{ facility.name }}</h3>
+            <p>{{ facility.description }}</p>
+            <div class="facility-actions">
+              <button class="btn-icon edit" (click)="openEditForm(facility)" title="Edit">✏️</button>
+              <button class="btn-icon delete" (click)="deleteItem(facility)" title="Delete">🗑️</button>
+            </div>
+          </div>
+        }
+      </div>
+    }
+  }
 
-    <div class="facility-card">
-      <div class="facility-icon">🏟️</div>
-      <h3>Sports Complex</h3>
-      <p>Basketball court, tennis court, and gymnasium</p>
-      <div class="facility-actions">
-        <button class="btn-icon edit">✏️</button>
-        <button class="btn-icon delete">🗑️</button>
+  <!-- Form View -->
+  @if (viewMode() === 'form') {
+    <div class="form-container">
+      <div class="form-header">
+        <h2>{{ editingItem() ? 'Edit Facility' : 'Add New Facility' }}</h2>
+        <button class="btn btn-outline" (click)="cancelForm()">Cancel</button>
       </div>
-    </div>
 
-    <div class="facility-card">
-      <div class="facility-icon">📚</div>
-      <h3>Library</h3>
-      <p>Modern library with digital resources and study areas</p>
-      <div class="facility-actions">
-        <button class="btn-icon edit">✏️</button>
-        <button class="btn-icon delete">🗑️</button>
-      </div>
-    </div>
+      <form (submit)="saveForm()" class="facility-form">
+        <div class="form-group">
+          <label for="name">Name *</label>
+          <input
+            type="text"
+            id="name"
+            [(ngModel)]="form.name"
+            name="name"
+            required
+            placeholder="Enter facility name"
+          >
+        </div>
 
-    <div class="facility-card">
-      <div class="facility-icon">🔬</div>
-      <h3>Science Labs</h3>
-      <p>Physics, chemistry, and biology laboratories</p>
-      <div class="facility-actions">
-        <button class="btn-icon edit">✏️</button>
-        <button class="btn-icon delete">🗑️</button>
-      </div>
-    </div>
+        <div class="form-group">
+          <label for="icon">Icon (Emoji)</label>
+          <input
+            type="text"
+            id="icon"
+            [(ngModel)]="form.icon"
+            name="icon"
+            placeholder="e.g., 🏫, 🏊, 🏟️"
+          >
+        </div>
 
-    <div class="facility-card">
-      <div class="facility-icon">💻</div>
-      <h3>Computer Lab</h3>
-      <p>State-of-the-art computer laboratory with 50 workstations</p>
-      <div class="facility-actions">
-        <button class="btn-icon edit">✏️</button>
-        <button class="btn-icon delete">🗑️</button>
-      </div>
+        <div class="form-group">
+          <label for="description">Description *</label>
+          <textarea
+            id="description"
+            [(ngModel)]="form.description"
+            name="description"
+            required
+            rows="4"
+            placeholder="Describe the facility"
+          ></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="image">Image</label>
+          <div class="image-upload-section">
+            @if (form.imageUrl) {
+              <div class="image-preview">
+                <img [src]="form.imageUrl" alt="Preview">
+                <button type="button" class="btn-remove-image" (click)="form.imageUrl = ''">✕</button>
+              </div>
+            }
+            <input
+              type="file"
+              id="image"
+              (change)="onFileSelected($event)"
+              accept="image/*"
+              class="file-input"
+            >
+            @if (isUploading()) {
+              <span class="upload-status">Uploading...</span>
+            }
+          </div>
+        </div>
+
+        <div class="form-group checkbox-group">
+          <label class="checkbox-label">
+            <input
+              type="checkbox"
+              [(ngModel)]="form.isActive"
+              name="isActive"
+            >
+            <span>Active</span>
+          </label>
+        </div>
+
+        <div class="form-actions">
+          <button type="button" class="btn btn-outline" (click)="cancelForm()">Cancel</button>
+          <button type="submit" class="btn btn-primary" [disabled]="isSaving()">
+            {{ isSaving() ? 'Saving...' : (editingItem() ? 'Update Facility' : 'Add Facility') }}
+          </button>
+        </div>
+      </form>
     </div>
-  </div>
+  }
 </div>

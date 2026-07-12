@@ -7,82 +7,137 @@
     </div>
     <div class="header-actions">
       <a routerLink="/admin/dashboard" class="btn btn-outline">← Dashboard</a>
-      <button class="btn btn-primary">+ Add Achievement</button>
+      @if (viewMode() === 'list') {
+        <button class="btn btn-primary" (click)="openCreateForm()">+ Add Achievement</button>
+      }
     </div>
   </div>
 
-  <!-- Achievements List -->
-  <div class="achievements-list">
-    <div class="achievement-card">
-      <div class="achievement-header">
-        <div class="achievement-icon">🥇</div>
-        <div class="achievement-title">
-          <h3>National Science Olympiad Winner</h3>
-          <span class="achievement-year">2024</span>
-        </div>
-      </div>
-      <p class="achievement-description">Our students won gold medal at the National Science Olympiad competition held in Colombo.</p>
-      <div class="achievement-footer">
-        <span class="achievement-category">Academic</span>
-        <div class="achievement-actions">
-          <button class="btn-icon edit">✏️</button>
-          <button class="btn-icon delete">🗑️</button>
-        </div>
-      </div>
-    </div>
+  <!-- Messages -->
+  @if (errorMessage()) {
+    <div class="alert alert-error">{{ errorMessage() }}</div>
+  }
+  @if (successMessage()) {
+    <div class="alert alert-success">{{ successMessage() }}</div>
+  }
 
-    <div class="achievement-card">
-      <div class="achievement-header">
-        <div class="achievement-icon">🏅</div>
-        <div class="achievement-title">
-          <h3>Inter-School Swimming Championship</h3>
-          <span class="achievement-year">2023</span>
-        </div>
+  <!-- List View -->
+  @if (viewMode() === 'list') {
+    @if (isLoading()) {
+      <div class="loading-state">
+        <div class="spinner"></div>
+        <p>Loading achievements...</p>
       </div>
-      <p class="achievement-description">School swimming team secured first place in the Inter-School Swimming Championship.</p>
-      <div class="achievement-footer">
-        <span class="achievement-category">Sports</span>
-        <div class="achievement-actions">
-          <button class="btn-icon edit">✏️</button>
-          <button class="btn-icon delete">🗑️</button>
-        </div>
+    } @else if (achievementList().length === 0) {
+      <div class="empty-state">
+        <div class="empty-icon">🏆</div>
+        <h3>No achievements yet</h3>
+        <p>Start by adding your first achievement.</p>
+        <button class="btn btn-primary" (click)="openCreateForm()">+ Add Achievement</button>
       </div>
-    </div>
+    } @else {
+      <div class="achievements-list">
+        @for (achievement of achievementList(); track achievement.id) {
+          <div class="achievement-card">
+            <div class="achievement-header">
+              @if (achievement.imageUrl) {
+                <img [src]="achievement.imageUrl" alt="" class="achievement-image">
+              } @else {
+                <div class="achievement-icon">�</div>
+              }
+              <div class="achievement-title">
+                <h3>{{ achievement.title }}</h3>
+                <span class="achievement-year">{{ achievement.year }}</span>
+              </div>
+            </div>
+            <p class="achievement-description">{{ achievement.description }}</p>
+            <div class="achievement-footer">
+              <span class="achievement-category">Achievement</span>
+              <div class="achievement-actions">
+                <button class="btn-icon edit" (click)="openEditForm(achievement)" title="Edit">✏️</button>
+                <button class="btn-icon delete" (click)="deleteItem(achievement)" title="Delete">🗑️</button>
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+    }
+  }
 
-    <div class="achievement-card">
-      <div class="achievement-header">
-        <div class="achievement-icon">🎭</div>
-        <div class="achievement-title">
-          <h3>Best Drama Performance Award</h3>
-          <span class="achievement-year">2023</span>
-        </div>
+  <!-- Form View -->
+  @if (viewMode() === 'form') {
+    <div class="form-container">
+      <div class="form-header">
+        <h2>{{ editingItem() ? 'Edit Achievement' : 'Add New Achievement' }}</h2>
+        <button class="btn btn-outline" (click)="cancelForm()">Cancel</button>
       </div>
-      <p class="achievement-description">Our drama club received the Best Performance Award at the Provincial Drama Festival.</p>
-      <div class="achievement-footer">
-        <span class="achievement-category">Cultural</span>
-        <div class="achievement-actions">
-          <button class="btn-icon edit">✏️</button>
-          <button class="btn-icon delete">🗑️</button>
-        </div>
-      </div>
-    </div>
 
-    <div class="achievement-card">
-      <div class="achievement-header">
-        <div class="achievement-icon">🎓</div>
-        <div class="achievement-title">
-          <h3>A-Level Excellence Award</h3>
-          <span class="achievement-year">2022</span>
+      <form (submit)="saveForm()" class="achievement-form">
+        <div class="form-group">
+          <label for="title">Title *</label>
+          <input
+            type="text"
+            id="title"
+            [(ngModel)]="form.title"
+            name="title"
+            required
+            placeholder="Enter achievement title"
+          >
         </div>
-      </div>
-      <p class="achievement-description">100% pass rate in A-Level examinations with 15 students achieving 3 A grades.</p>
-      <div class="achievement-footer">
-        <span class="achievement-category">Academic</span>
-        <div class="achievement-actions">
-          <button class="btn-icon edit">✏️</button>
-          <button class="btn-icon delete">🗑️</button>
+
+        <div class="form-group">
+          <label for="year">Year *</label>
+          <input
+            type="number"
+            id="year"
+            [(ngModel)]="form.year"
+            name="year"
+            required
+            placeholder="Enter year"
+          >
         </div>
-      </div>
+
+        <div class="form-group">
+          <label for="description">Description *</label>
+          <textarea
+            id="description"
+            [(ngModel)]="form.description"
+            name="description"
+            required
+            rows="4"
+            placeholder="Describe the achievement"
+          ></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="image">Image</label>
+          <div class="image-upload-section">
+            @if (form.imageUrl) {
+              <div class="image-preview">
+                <img [src]="form.imageUrl" alt="Preview">
+                <button type="button" class="btn-remove-image" (click)="form.imageUrl = ''">✕</button>
+              </div>
+            }
+            <input
+              type="file"
+              id="image"
+              (change)="onFileSelected($event)"
+              accept="image/*"
+              class="file-input"
+            >
+            @if (isUploading()) {
+              <span class="upload-status">Uploading...</span>
+            }
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button type="button" class="btn btn-outline" (click)="cancelForm()">Cancel</button>
+          <button type="submit" class="btn btn-primary" [disabled]="isSaving()">
+            {{ isSaving() ? 'Saving...' : (editingItem() ? 'Update Achievement' : 'Create Achievement') }}
+          </button>
+        </div>
+      </form>
     </div>
-  </div>
+  }
 </div>

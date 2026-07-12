@@ -10,87 +10,100 @@
     </div>
   </div>
 
+  <!-- Messages -->
+  @if (errorMessage()) {
+    <div class="alert alert-error">{{ errorMessage() }}</div>
+  }
+  @if (successMessage()) {
+    <div class="alert alert-success">{{ successMessage() }}</div>
+  }
+
+  <!-- Message Detail Modal -->
+  @if (selectedMessage()) {
+    <div class="modal-overlay" (click)="closeMessage()">
+      <div class="modal-content" (click)="$event.stopPropagation()">
+        <div class="modal-header">
+          <h2>{{ selectedMessage()?.subject || 'No Subject' }}</h2>
+          <button class="btn-close" (click)="closeMessage()">✕</button>
+        </div>
+        <div class="modal-body">
+          <div class="message-detail">
+            <div class="detail-row">
+              <strong>From:</strong> {{ selectedMessage()?.name }}
+            </div>
+            <div class="detail-row">
+              <strong>Email:</strong> {{ selectedMessage()?.email }}
+            </div>
+            @if (selectedMessage()?.phone) {
+              <div class="detail-row">
+                <strong>Phone:</strong> {{ selectedMessage()?.phone }}
+              </div>
+            }
+            <div class="detail-row">
+              <strong>Date:</strong> {{ formatDate(selectedMessage()?.submittedAt || '') }}
+            </div>
+            <div class="detail-message">
+              <strong>Message:</strong>
+              <p>{{ selectedMessage()?.message }}</p>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-outline" (click)="closeMessage()">Close</button>
+          <button class="btn btn-danger" (click)="deleteMessage(selectedMessage()!)">Delete</button>
+        </div>
+      </div>
+    </div>
+  }
+
   <!-- Messages List -->
-  <div class="messages-list">
-    <div class="message-card unread">
-      <div class="message-header">
-        <div class="message-sender">
-          <div class="sender-avatar">J</div>
-          <div class="sender-info">
-            <h4>John Smith</h4>
-            <span class="message-date">Today, 10:30 AM</span>
+  @if (isLoading()) {
+    <div class="loading-state">
+      <div class="spinner"></div>
+      <p>Loading messages...</p>
+    </div>
+  } @else if (contactList().length === 0) {
+    <div class="empty-state">
+      <div class="empty-icon">✉️</div>
+      <h3>No messages yet</h3>
+      <p>Contact messages will appear here.</p>
+    </div>
+  } @else {
+    <div class="messages-list">
+      @for (message of contactList(); track message.id) {
+        <div class="message-card" [class.unread]="!message.isRead" (click)="viewMessage(message)">
+          <div class="message-header">
+            <div class="message-sender">
+              <div class="sender-avatar">{{ message.name.charAt(0) || '?' }}</div>
+              <div class="sender-info">
+                <h4>{{ message.name }}</h4>
+                <span class="message-date">{{ formatDate(message.submittedAt || '') }}</span>
+              </div>
+            </div>
+            <span class="badge" [class.bad-unread]="!message.isRead" [class.badge-read]="message.isRead">
+              {{ message.isRead ? 'Read' : 'New' }}
+            </span>
+          </div>
+          <div class="message-content">
+            @if (message.subject) {
+              <p><strong>Subject:</strong> {{ message.subject }}</p>
+            }
+            <p>{{ message.message.substring(0, 150) }}{{ message.message && message.message.length > 150 ? '...' : '' }}</p>
+          </div>
+          <div class="message-footer">
+            <div class="message-contact">
+              <span>📧 {{ message.email }}</span>
+              @if (message.phone) {
+                <span>📞 {{ message.phone }}</span>
+              }
+            </div>
+            <div class="message-actions">
+              <button class="btn-icon view" (click)="viewMessage(message); $event.stopPropagation()" title="View">👁️</button>
+              <button class="btn-icon delete" (click)="deleteMessage(message); $event.stopPropagation()" title="Delete">🗑️</button>
+            </div>
           </div>
         </div>
-        <span class="badge badge-unread">New</span>
-      </div>
-      <div class="message-content">
-        <p><strong>Subject:</strong> Admission Inquiry for Grade 6</p>
-        <p>Hello, I would like to inquire about admission for my daughter for Grade 6 for the upcoming academic year. Could you please provide information about the admission process and requirements?</p>
-      </div>
-      <div class="message-footer">
-        <div class="message-contact">
-          <span>📧 john.smith@email.com</span>
-          <span>📞 +94 77 123 4567</span>
-        </div>
-        <div class="message-actions">
-          <button class="btn btn-primary">Reply</button>
-          <button class="btn btn-outline">Mark as Read</button>
-        </div>
-      </div>
+      }
     </div>
-
-    <div class="message-card unread">
-      <div class="message-header">
-        <div class="message-sender">
-          <div class="sender-avatar">S</div>
-          <div class="sender-info">
-            <h4>Sarah Johnson</h4>
-            <span class="message-date">Yesterday, 3:45 PM</span>
-          </div>
-        </div>
-        <span class="badge badge-unread">New</span>
-      </div>
-      <div class="message-content">
-        <p><strong>Subject:</strong> School Tour Request</p>
-        <p>We are considering enrolling our son at Hill Country International School and would like to schedule a school tour. Please let us know available times.</p>
-      </div>
-      <div class="message-footer">
-        <div class="message-contact">
-          <span>📧 sarah.j@email.com</span>
-          <span>📞 +94 71 234 5678</span>
-        </div>
-        <div class="message-actions">
-          <button class="btn btn-primary">Reply</button>
-          <button class="btn btn-outline">Mark as Read</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="message-card">
-      <div class="message-header">
-        <div class="message-sender">
-          <div class="sender-avatar">M</div>
-          <div class="sender-info">
-            <h4>Michael Perera</h4>
-            <span class="message-date">July 8, 2024</span>
-          </div>
-        </div>
-        <span class="badge badge-read">Read</span>
-      </div>
-      <div class="message-content">
-        <p><strong>Subject:</strong> Fee Structure Inquiry</p>
-        <p>Could you please send me the detailed fee structure for the upcoming academic year? I'm particularly interested in the Grade 8 fees.</p>
-      </div>
-      <div class="message-footer">
-        <div class="message-contact">
-          <span>📧 michael.perera@email.com</span>
-          <span>📞 +94 77 987 6543</span>
-        </div>
-        <div class="message-actions">
-          <button class="btn btn-primary">Reply</button>
-          <button class="btn btn-outline">Archive</button>
-        </div>
-      </div>
-    </div>
-  </div>
+  }
 </div>

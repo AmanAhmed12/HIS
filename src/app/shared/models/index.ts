@@ -3,7 +3,8 @@
 export interface SchoolInfo {
   id: number;
   key: string;
-  content: string;
+  value: string;
+  category: string;
   updatedAt: string;
 }
 
@@ -24,6 +25,7 @@ export interface GalleryItem {
   description: string;
   imageUrl: string;
   category: string;
+  isActive: boolean;
   createdAt: string;
 }
 
@@ -31,6 +33,7 @@ export interface Announcement {
   id: number;
   title: string;
   content: string;
+  priority: string;
   isActive: boolean;
   expiresAt: string;
 }
@@ -40,6 +43,8 @@ export interface Facility {
   name: string;
   description: string;
   imageUrl: string;
+  icon: string;
+  isActive: boolean;
 }
 
 export interface Achievement {
@@ -56,6 +61,9 @@ export interface Download {
   description: string;
   fileUrl: string;
   fileType: string;
+  category: string;
+  fileSize?: number;
+  isActive: boolean;
   createdAt: string;
 }
 

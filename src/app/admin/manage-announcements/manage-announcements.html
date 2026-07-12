@@ -7,55 +7,133 @@
     </div>
     <div class="header-actions">
       <a routerLink="/admin/dashboard" class="btn btn-outline">← Dashboard</a>
-      <button class="btn btn-primary">+ New Announcement</button>
+      @if (viewMode() === 'list') {
+        <button class="btn btn-primary" (click)="openCreateForm()">+ New Announcement</button>
+      }
     </div>
   </div>
 
-  <!-- Announcements List -->
-  <div class="announcements-list">
-    <div class="announcement-card">
-      <div class="announcement-header">
-        <h3>School Closure Notice</h3>
-        <span class="badge badge-urgent">Urgent</span>
-      </div>
-      <p class="announcement-content">The school will be closed on Monday, July 15th for a public holiday.</p>
-      <div class="announcement-footer">
-        <span class="announcement-date">Posted: July 10, 2024</span>
-        <div class="announcement-actions">
-          <button class="btn-icon edit">✏️</button>
-          <button class="btn-icon delete">🗑️</button>
-        </div>
-      </div>
-    </div>
+  <!-- Messages -->
+  @if (errorMessage()) {
+    <div class="alert alert-error">{{ errorMessage() }}</div>
+  }
+  @if (successMessage()) {
+    <div class="alert alert-success">{{ successMessage() }}</div>
+  }
 
-    <div class="announcement-card">
-      <div class="announcement-header">
-        <h3>Parent-Teacher Meeting</h3>
-        <span class="badge badge-info">General</span>
+  <!-- List View -->
+  @if (viewMode() === 'list') {
+    @if (isLoading()) {
+      <div class="loading-state">
+        <div class="spinner"></div>
+        <p>Loading announcements...</p>
       </div>
-      <p class="announcement-content">Parent-teacher meetings will be held on July 20th from 9 AM to 12 PM.</p>
-      <div class="announcement-footer">
-        <span class="announcement-date">Posted: July 8, 2024</span>
-        <div class="announcement-actions">
-          <button class="btn-icon edit">✏️</button>
-          <button class="btn-icon delete">🗑️</button>
-        </div>
+    } @else if (announcementList().length === 0) {
+      <div class="empty-state">
+        <div class="empty-icon">📢</div>
+        <h3>No announcements yet</h3>
+        <p>Start by creating your first announcement.</p>
+        <button class="btn btn-primary" (click)="openCreateForm()">+ New Announcement</button>
       </div>
-    </div>
+    } @else {
+      <div class="announcements-list">
+        @for (announcement of announcementList(); track announcement.id) {
+          <div class="announcement-card">
+            <div class="announcement-header">
+              <h3>{{ announcement.title }}</h3>
+              <span class="badge" [class]="'badge-' + getBadgeClass(announcement.priority)">{{ announcement.priority }}</span>
+            </div>
+            <p class="announcement-content">{{ announcement.content }}</p>
+            <div class="announcement-footer">
+              <div class="announcement-meta">
+                <span class="announcement-status" [class.inactive]="!announcement.isActive">
+                  {{ announcement.isActive ? 'Active' : 'Inactive' }}
+                </span>
+                @if (announcement.expiresAt) {
+                  <span class="announcement-date">Expires: {{ formatDate(announcement.expiresAt) }}</span>
+                }
+              </div>
+              <div class="announcement-actions">
+                <button class="btn-icon edit" (click)="openEditForm(announcement)" title="Edit">✏️</button>
+                <button class="btn-icon delete" (click)="deleteItem(announcement)" title="Delete">🗑️</button>
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+    }
+  }
 
-    <div class="announcement-card">
-      <div class="announcement-header">
-        <h3>Exam Schedule Released</h3>
-        <span class="badge badge-success">Academic</span>
+  <!-- Form View -->
+  @if (viewMode() === 'form') {
+    <div class="form-container">
+      <div class="form-header">
+        <h2>{{ editingItem() ? 'Edit Announcement' : 'New Announcement' }}</h2>
+        <button class="btn btn-outline" (click)="cancelForm()">Cancel</button>
       </div>
-      <p class="announcement-content">The mid-term examination schedule for grades 6-10 has been released. Please check the downloads section.</p>
-      <div class="announcement-footer">
-        <span class="announcement-date">Posted: July 5, 2024</span>
-        <div class="announcement-actions">
-          <button class="btn-icon edit">✏️</button>
-          <button class="btn-icon delete">🗑️</button>
+
+      <form (submit)="saveForm()" class="announcement-form">
+        <div class="form-group">
+          <label for="title">Title *</label>
+          <input
+            type="text"
+            id="title"
+            [(ngModel)]="form.title"
+            name="title"
+            required
+            placeholder="Enter announcement title"
+          >
         </div>
-      </div>
+
+        <div class="form-group">
+          <label for="priority">Priority</label>
+          <select id="priority" [(ngModel)]="form.priority" name="priority" class="form-select">
+            <option value="NORMAL">Normal</option>
+            <option value="IMPORTANT">Important</option>
+            <option value="URGENT">Urgent</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="content">Content *</label>
+          <textarea
+            id="content"
+            [(ngModel)]="form.content"
+            name="content"
+            required
+            rows="5"
+            placeholder="Enter announcement content"
+          ></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="expiresAt">Expiration Date (Optional)</label>
+          <input
+            type="datetime-local"
+            id="expiresAt"
+            [(ngModel)]="form.expiresAt"
+            name="expiresAt"
+          >
+        </div>
+
+        <div class="form-group checkbox-group">
+          <label class="checkbox-label">
+            <input
+              type="checkbox"
+              [(ngModel)]="form.isActive"
+              name="isActive"
+            >
+            <span>Active</span>
+          </label>
+        </div>
+
+        <div class="form-actions">
+          <button type="button" class="btn btn-outline" (click)="cancelForm()">Cancel</button>
+          <button type="submit" class="btn btn-primary" [disabled]="isSaving()">
+            {{ isSaving() ? 'Saving...' : (editingItem() ? 'Update Announcement' : 'Create Announcement') }}
+          </button>
+        </div>
+      </form>
     </div>
-  </div>
+  }
 </div>
