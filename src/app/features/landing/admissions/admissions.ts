@@ -3,7 +3,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { signal } from '@angular/core';
 import { SchoolInfoService } from '../../../core/services/school-info.service';
-import { SchoolInfo } from '../../../shared/models';
+import { AdmissionsService } from './admissions.service';
+import { SchoolInfo, Admission } from '../../../shared/models';
 
 @Component({
   selector: 'app-admissions',
@@ -14,15 +15,16 @@ import { SchoolInfo } from '../../../shared/models';
 })
 export class Admissions implements OnInit {
   private schoolInfoService = inject(SchoolInfoService);
+  private admissionsService = inject(AdmissionsService);
   private cdr = inject(ChangeDetectorRef);
 
   schoolInfo: SchoolInfo[] = [];
   loading = true;
 
-  form = {
+  form: Admission = {
     studentName: '',
     dateOfBirth: '',
-    grade: '',
+    gradeApplying: '',
     parentName: '',
     email: '',
     phone: '',
@@ -69,22 +71,28 @@ export class Admissions implements OnInit {
     this.isSubmitting.set(true);
     this.errorMessage.set('');
 
-    setTimeout(() => {
-      this.isSubmitting.set(false);
-      this.submitted.set(true);
-      this.form = {
-        studentName: '',
-        dateOfBirth: '',
-        grade: '',
-        parentName: '',
-        email: '',
-        phone: '',
-        address: '',
-        previousSchool: '',
-        specialNeeds: '',
-        message: ''
-      };
-    }, 1500);
+    this.admissionsService.submit(this.form).subscribe({
+      next: () => {
+        this.isSubmitting.set(false);
+        this.submitted.set(true);
+        this.form = {
+          studentName: '',
+          dateOfBirth: '',
+          gradeApplying: '',
+          parentName: '',
+          email: '',
+          phone: '',
+          address: '',
+          previousSchool: '',
+          specialNeeds: '',
+          message: ''
+        };
+      },
+      error: (err: Error) => {
+        this.isSubmitting.set(false);
+        this.errorMessage.set(err.message || 'Failed to submit application. Please try again.');
+      }
+    });
   }
 
   resetForm() {

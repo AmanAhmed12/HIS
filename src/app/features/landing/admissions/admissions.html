@@ -166,7 +166,7 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
           <div>
             <label for="grade" class="block text-sm font-bold text-slate-700 mb-2">Grade Applying For *</label>
-            <select id="grade" name="grade" [(ngModel)]="form.grade" required
+            <select id="grade" name="gradeApplying" [(ngModel)]="form.gradeApplying" required
               class="w-full bg-slate-50 border border-slate-200 rounded-xl px-5 py-3.5 text-slate-800 focus:outline-none focus:ring-2 focus:ring-primary-royal/30 focus:border-primary-royal transition-all">
               <option value="">Select Grade</option>
               @for (g of [1,2,3,4,5,6,7,8,9,10,11,12]; track g) {

@@ -116,3 +116,21 @@ export interface AuthResponse {
   user: AdminUser;
   expiresIn: number;
 }
+
+export interface Admission {
+  id?: number;
+  studentName: string;
+  dateOfBirth?: string;
+  gradeApplying?: string;
+  previousSchool?: string;
+  parentName: string;
+  email: string;
+  phone: string;
+  address?: string;
+  specialNeeds?: string;
+  message?: string;
+  applicationStatus?: string;
+  isReviewed?: boolean;
+  createdAt?: string;
+  updatedAt?: string;
+}

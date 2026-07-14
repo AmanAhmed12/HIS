@@ -1,0 +1,168 @@
+<div class="admin-page">
+  <!-- Page Header -->
+  <div class="page-header">
+    <div>
+      <h1>📋 Manage Admissions</h1>
+      <p>Review and manage student admission applications.</p>
+    </div>
+    <div class="header-actions">
+      <a routerLink="/admin/dashboard" class="btn btn-outline">← Dashboard</a>
+    </div>
+  </div>
+
+  <!-- Messages -->
+  @if (errorMessage()) {
+    <div class="alert alert-error">{{ errorMessage() }}</div>
+  }
+  @if (successMessage()) {
+    <div class="alert alert-success">{{ successMessage() }}</div>
+  }
+
+  <!-- Filter Tabs -->
+  <div class="filter-tabs">
+    <button class="filter-tab" [class.active]="filterStatus() === 'ALL'" (click)="filterStatus.set('ALL')">All</button>
+    <button class="filter-tab" [class.active]="filterStatus() === 'PENDING'" (click)="filterStatus.set('PENDING')">Pending</button>
+    <button class="filter-tab" [class.active]="filterStatus() === 'APPROVED'" (click)="filterStatus.set('APPROVED')">Approved</button>
+    <button class="filter-tab" [class.active]="filterStatus() === 'REJECTED'" (click)="filterStatus.set('REJECTED')">Rejected</button>
+  </div>
+
+  <!-- Admission Detail Modal -->
+  @if (selectedAdmission()) {
+    <div class="modal-overlay" (click)="closeAdmission()">
+      <div class="modal-content modal-large" (click)="$event.stopPropagation()">
+        <div class="modal-header">
+          <h2>Application Details</h2>
+          <button class="btn-close" (click)="closeAdmission()">✕</button>
+        </div>
+        <div class="modal-body">
+          <div class="admission-detail">
+            <div class="detail-section">
+              <h3>Student Information</h3>
+              <div class="detail-row">
+                <strong>Student Name:</strong> {{ selectedAdmission()?.studentName }}
+              </div>
+              <div class="detail-row">
+                <strong>Date of Birth:</strong> {{ selectedAdmission()?.dateOfBirth || 'Not provided' }}
+              </div>
+              <div class="detail-row">
+                <strong>Grade Applying For:</strong> {{ selectedAdmission()?.gradeApplying || 'Not specified' }}
+              </div>
+              <div class="detail-row">
+                <strong>Previous School:</strong> {{ selectedAdmission()?.previousSchool || 'Not provided' }}
+              </div>
+            </div>
+            
+            <div class="detail-section">
+              <h3>Parent/Guardian Information</h3>
+              <div class="detail-row">
+                <strong>Parent Name:</strong> {{ selectedAdmission()?.parentName }}
+              </div>
+              <div class="detail-row">
+                <strong>Email:</strong> {{ selectedAdmission()?.email }}
+              </div>
+              <div class="detail-row">
+                <strong>Phone:</strong> {{ selectedAdmission()?.phone }}
+              </div>
+              <div class="detail-row">
+                <strong>Address:</strong> {{ selectedAdmission()?.address || 'Not provided' }}
+              </div>
+            </div>
+            
+            <div class="detail-section">
+              <h3>Additional Information</h3>
+              <div class="detail-row">
+                <strong>Special Needs:</strong> {{ selectedAdmission()?.specialNeeds || 'None' }}
+              </div>
+              <div class="detail-row">
+                <strong>Additional Message:</strong> {{ selectedAdmission()?.message || 'None' }}
+              </div>
+            </div>
+            
+            <div class="detail-section">
+              <h3>Application Status</h3>
+              <div class="detail-row">
+                <strong>Current Status:</strong> 
+                <span class="status-badge" [ngClass]="getStatusClass(selectedAdmission()?.applicationStatus || '')">
+                  {{ selectedAdmission()?.applicationStatus || 'PENDING' }}
+                </span>
+              </div>
+              <div class="detail-row">
+                <strong>Submitted Date:</strong> {{ formatDate(selectedAdmission()?.createdAt || '') }}
+              </div>
+              <div class="detail-row">
+                <strong>Reviewed:</strong> {{ selectedAdmission()?.isReviewed ? 'Yes' : 'No' }}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <div class="status-actions">
+            <button class="btn btn-success" (click)="updateStatus(selectedAdmission()!, 'APPROVED')">✓ Approve</button>
+            <button class="btn btn-warning" (click)="updateStatus(selectedAdmission()!, 'PENDING')">⏸ Pending</button>
+            <button class="btn btn-danger" (click)="updateStatus(selectedAdmission()!, 'REJECTED')">✗ Reject</button>
+          </div>
+          <div class="modal-actions">
+            <button class="btn btn-outline" (click)="closeAdmission()">Close</button>
+            <button class="btn btn-danger" (click)="deleteAdmission(selectedAdmission()!)">Delete</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  }
+
+  <!-- Admissions List -->
+  @if (isLoading()) {
+    <div class="loading-state">
+      <div class="spinner"></div>
+      <p>Loading admissions...</p>
+    </div>
+  } @else if (filteredAdmissions.length === 0) {
+    <div class="empty-state">
+      <div class="empty-icon">📋</div>
+      <h3>No applications found</h3>
+      <p>No admission applications match the current filter.</p>
+    </div>
+  } @else {
+    <div class="admissions-list">
+      @for (admission of filteredAdmissions; track admission.id) {
+        <div class="admission-card" (click)="viewAdmission(admission)">
+          <div class="admission-header">
+            <div class="student-info">
+              <div class="student-avatar">{{ admission.studentName.charAt(0) || '?' }}</div>
+              <div class="student-details">
+                <h4>{{ admission.studentName }}</h4>
+                <span class="grade-badge">Grade {{ admission.gradeApplying || 'N/A' }}</span>
+              </div>
+            </div>
+            <span class="status-badge" [ngClass]="getStatusClass(admission.applicationStatus || 'PENDING')">
+              {{ admission.applicationStatus || 'PENDING' }}
+            </span>
+          </div>
+          <div class="admission-content">
+            <div class="content-row">
+              <span><strong>Parent:</strong> {{ admission.parentName }}</span>
+              <span><strong>Email:</strong> {{ admission.email }}</span>
+            </div>
+            <div class="content-row">
+              <span><strong>Phone:</strong> {{ admission.phone }}</span>
+              <span><strong>Applied:</strong> {{ formatDate(admission.createdAt || '') }}</span>
+            </div>
+          </div>
+          <div class="admission-footer">
+            <div class="review-status">
+              @if (!admission.isReviewed) {
+                <span class="badge badge-new">New</span>
+              }
+            </div>
+            <div class="admission-actions">
+              <button class="btn-icon view" (click)="viewAdmission(admission); $event.stopPropagation()" title="View Details">👁️</button>
+              <button class="btn-icon approve" (click)="updateStatus(admission, 'APPROVED'); $event.stopPropagation()" title="Approve">✓</button>
+              <button class="btn-icon reject" (click)="updateStatus(admission, 'REJECTED'); $event.stopPropagation()" title="Reject">✗</button>
+              <button class="btn-icon delete" (click)="deleteAdmission(admission); $event.stopPropagation()" title="Delete">🗑️</button>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  }
+</div>

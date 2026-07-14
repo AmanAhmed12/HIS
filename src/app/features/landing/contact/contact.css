@@ -15,7 +15,7 @@
   right: 0;
   bottom: 0;
   background: linear-gradient(135deg, rgba(30, 58, 138, 0.95) 0%, rgba(59, 130, 246, 0.9) 100%),
-              url('/images/hero-bg.png') center/cover no-repeat;
+    url('/images/hero-bg.png') center/cover no-repeat;
   z-index: -1;
 }
 
@@ -128,81 +128,6 @@ section {
 
 .contact-info-card a:hover {
   color: #1e3a8a;
-}
-
-/* Downloads Section */
-.downloads-section {
-  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-}
-
-.download-category {
-  margin-bottom: 48px;
-}
-
-.download-category:last-child {
-  margin-bottom: 0;
-}
-
-.download-category h3 {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: #1e3a8a;
-  margin-bottom: 24px;
-}
-
-.downloads-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 24px;
-}
-
-.download-card {
-  background: white;
-  padding: 32px;
-  border-radius: 16px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-  transition: all 0.4s ease;
-}
-
-.download-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
-}
-
-.download-icon {
-  font-size: 40px;
-  margin-bottom: 16px;
-}
-
-.download-card h4 {
-  font-size: 1.125rem;
-  font-weight: 700;
-  color: #1e3a8a;
-  margin-bottom: 8px;
-}
-
-.download-card p {
-  color: #6b7280;
-  line-height: 1.6;
-  margin-bottom: 16px;
-  font-size: 14px;
-}
-
-.download-btn {
-  width: 100%;
-  padding: 12px 24px;
-  background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.download-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(30, 58, 138, 0.3);
 }
 
 /* Contact Form Section */
@@ -383,6 +308,7 @@ textarea.form-control {
     opacity: 0;
     transform: translateY(30px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -400,7 +326,6 @@ textarea.form-control {
   }
 
   .contact-info-grid,
-  .downloads-grid,
   .form-row {
     grid-template-columns: 1fr;
   }
