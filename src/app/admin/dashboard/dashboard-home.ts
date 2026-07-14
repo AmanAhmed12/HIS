@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NewsService } from '../../features/news-events/news.service';
 import { GalleryService } from '../../features/gallery/gallery.service';
@@ -38,7 +38,8 @@ export class DashboardHome implements OnInit {
     private facilityService: FacilityService,
     private downloadService: DownloadService,
     private achievementService: AchievementService,
-    private admissionsService: AdmissionsService
+    private admissionsService: AdmissionsService,
+    private cdr: ChangeDetectorRef
   ) {}
 
   // Chart data for CSS-based charts
@@ -89,22 +90,42 @@ export class DashboardHome implements OnInit {
       achievements: this.achievementService.getAllAdmin(),
       admissions: this.admissionsService.getAll()
     }).subscribe({
-      next: (data) => {
+      next: (data: any) => {
         console.log('Dashboard data loaded:', data);
+        
+        // Safely extract arrays from potentially paginated responses
+        const extractArray = (res: any) => {
+          if (!res) return [];
+          if (Array.isArray(res)) return res;
+          if (res.content && Array.isArray(res.content)) return res.content;
+          if (res._embedded) return Object.values(res._embedded)[0] || [];
+          return [];
+        };
+
+        const news = extractArray(data.news);
+        const announcements = extractArray(data.announcements);
+        const contact = extractArray(data.contact);
+        const gallery = extractArray(data.gallery);
+        const facilities = extractArray(data.facilities);
+        const downloads = extractArray(data.downloads);
+        const achievements = extractArray(data.achievements);
+        const admissions = extractArray(data.admissions);
+
         this.stats = {
-          news: data.news?.length || 0,
-          announcements: data.announcements?.length || 0,
-          unreadMessages: data.contact?.filter((c: any) => !c.isRead).length || 0,
-          galleryItems: data.gallery?.length || 0,
-          facilities: data.facilities?.length || 0,
-          downloads: data.downloads?.length || 0,
-          achievements: data.achievements?.length || 0,
-          admissions: data.admissions?.length || 0
+          news: news.length,
+          announcements: announcements.length,
+          unreadMessages: contact.filter((c: any) => !c.isRead).length,
+          galleryItems: gallery.length,
+          facilities: facilities.length,
+          downloads: downloads.length,
+          achievements: achievements.length,
+          admissions: admissions.length
         };
 
         // Update chart data based on actual data
-        this.updateChartData(data);
+        this.updateChartData({ admissions });
         this.loading = false;
+        this.cdr.detectChanges();
       },
       error: (error) => {
         console.error('Error loading dashboard data:', error);
@@ -121,6 +142,7 @@ export class DashboardHome implements OnInit {
         };
         this.updateChartData({});
         this.loading = false;
+        this.cdr.detectChanges();
       }
     });
   }
