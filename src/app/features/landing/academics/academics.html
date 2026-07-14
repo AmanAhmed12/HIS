@@ -1,25 +1,30 @@
 <!-- Hero Section -->
 <section class="relative min-h-[50vh] flex items-center justify-center pt-24 pb-16 overflow-hidden">
   <div class="absolute inset-0 z-0">
-    <div class="absolute inset-0 bg-gradient-to-br from-primary-navy/95 via-primary-royal/90 to-accent-cyan/80 mix-blend-multiply z-10"></div>
-    <img src="/images/hero-bg.png" alt="Academics background" loading="eager" class="w-full h-full object-cover object-center">
+    <div
+      class="absolute inset-0 bg-gradient-to-br from-primary-navy/95 via-primary-royal/90 to-accent-cyan/80 mix-blend-multiply z-10">
+    </div>
+    <img src="/images/hero-bg.png" alt="Academics background" loading="eager"
+      class="w-full h-full object-cover object-center">
   </div>
-  
+
   <div class="container mx-auto px-6 relative z-10 text-center animate-on-scroll">
     @if (loading) {
-      <div class="flex justify-center my-20">
-        <div class="w-12 h-12 border-4 border-white/20 border-t-white rounded-full animate-spin"></div>
-      </div>
+    <div class="flex justify-center my-20">
+      <div class="w-12 h-12 border-4 border-white/20 border-t-white rounded-full animate-spin"></div>
+    </div>
     } @else {
-      <span class="inline-block px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-accent-gold text-sm font-bold tracking-widest uppercase mb-6 shadow-lg">
-        {{ getSchoolInfoValue('academics_subtitle') || 'Academic Excellence' }}
-      </span>
-      <h1 class="text-4xl md:text-6xl font-extrabold text-white mb-6 leading-tight max-w-4xl mx-auto">
-        {{ getSchoolInfoValue('academics_title') || 'World-Class Education' }}
-      </h1>
-      <p class="text-lg md:text-xl text-slate-200 max-w-2xl mx-auto font-light leading-relaxed">
-        {{ getSchoolInfoValue('academics_description') || 'Discover our comprehensive international curriculum designed to develop critical thinking, creativity, and global citizenship.' }}
-      </p>
+    <span
+      class="inline-block px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-accent-gold text-sm font-bold tracking-widest uppercase mb-6 shadow-lg">
+      {{ getSchoolInfoValue('academics_subtitle') || 'Academic Excellence' }}
+    </span>
+    <h1 class="text-4xl md:text-6xl font-extrabold text-white mb-6 leading-tight max-w-4xl mx-auto">
+      {{ getSchoolInfoValue('academics_title') || 'World-Class Education' }}
+    </h1>
+    <p class="text-lg md:text-xl text-slate-200 max-w-2xl mx-auto font-light leading-relaxed">
+      {{ getSchoolInfoValue('academics_description') || 'Discover our comprehensive international curriculum designed to
+      develop critical thinking, creativity, and global citizenship.' }}
+    </p>
     }
   </div>
 </section>
@@ -32,50 +37,79 @@
       <h2 class="text-3xl md:text-5xl font-bold text-primary-navy mb-6 tracking-tight">Our Programs</h2>
       <p class="text-lg text-slate-500 font-light">Comprehensive education from primary to high school</p>
     </div>
-    
+
     <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
       <!-- Primary School -->
-      <div class="bg-slate-50 rounded-3xl p-8 border border-slate-100 hover:-translate-y-2 hover:shadow-xl transition-all duration-300 animate-on-scroll group">
-        <div class="w-16 h-16 bg-blue-50 text-primary-royal rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:scale-110 transition-transform duration-300">🎓</div>
+      <div
+        class="bg-slate-50 rounded-3xl p-8 border border-slate-100 hover:-translate-y-2 hover:shadow-xl transition-all duration-300 animate-on-scroll group">
+        <div
+          class="w-16 h-16 bg-blue-50 text-primary-royal rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:scale-110 transition-transform duration-300">
+          🎓</div>
         <h3 class="text-2xl font-bold text-primary-navy mb-2">Primary School</h3>
-        <span class="inline-block px-3 py-1 bg-white border border-slate-200 text-slate-500 rounded-full text-xs font-bold uppercase tracking-wider mb-4">Grades 1-5</span>
-        <p class="text-slate-600 font-light mb-6">Building strong foundations through inquiry-based learning and holistic development.</p>
+        <span
+          class="inline-block px-3 py-1 bg-white border border-slate-200 text-slate-500 rounded-full text-xs font-bold uppercase tracking-wider mb-4">Grades
+          1-5</span>
+        <p class="text-slate-600 font-light mb-6">Building strong foundations through inquiry-based learning and
+          holistic development.</p>
         <ul class="space-y-3">
-          <li class="flex items-start text-slate-600 text-sm"><span class="text-accent-gold mr-3 mt-0.5">✔</span> English Language Arts</li>
-          <li class="flex items-start text-slate-600 text-sm"><span class="text-accent-gold mr-3 mt-0.5">✔</span> Mathematics</li>
-          <li class="flex items-start text-slate-600 text-sm"><span class="text-accent-gold mr-3 mt-0.5">✔</span> Science & Social Studies</li>
-          <li class="flex items-start text-slate-600 text-sm"><span class="text-accent-gold mr-3 mt-0.5">✔</span> Art, Music & PE</li>
+          <li class="flex items-start text-slate-600 text-sm"><span class="text-accent-gold mr-3 mt-0.5">✔</span>
+            English Language Arts</li>
+          <li class="flex items-start text-slate-600 text-sm"><span class="text-accent-gold mr-3 mt-0.5">✔</span>
+            Mathematics</li>
+          <li class="flex items-start text-slate-600 text-sm"><span class="text-accent-gold mr-3 mt-0.5">✔</span>
+            Science & Social Studies</li>
+          <li class="flex items-start text-slate-600 text-sm"><span class="text-accent-gold mr-3 mt-0.5">✔</span> Art,
+            Music & PE</li>
         </ul>
       </div>
 
       <!-- Middle School -->
-      <div class="bg-primary-navy text-white rounded-3xl p-8 border border-primary-royal hover:-translate-y-2 hover:shadow-2xl shadow-primary-navy/50 transition-all duration-300 animate-on-scroll delay-100 group relative overflow-hidden">
+      <div
+        class="bg-primary-navy text-white rounded-3xl p-8 border border-primary-royal hover:-translate-y-2 hover:shadow-2xl shadow-primary-navy/50 transition-all duration-300 animate-on-scroll delay-100 group relative overflow-hidden">
         <div class="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent"></div>
         <div class="relative z-10">
-          <div class="w-16 h-16 bg-white/10 text-accent-gold rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:scale-110 transition-transform duration-300 backdrop-blur-md">📚</div>
+          <div
+            class="w-16 h-16 bg-white/10 text-accent-gold rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:scale-110 transition-transform duration-300 backdrop-blur-md">
+            📚</div>
           <h3 class="text-2xl font-bold mb-2">Middle School</h3>
-          <span class="inline-block px-3 py-1 bg-white/10 text-slate-300 border border-white/20 rounded-full text-xs font-bold uppercase tracking-wider mb-4">Grades 6-8</span>
-          <p class="text-slate-300 font-light mb-6">Developing critical thinking and preparing students for advanced studies.</p>
+          <span
+            class="inline-block px-3 py-1 bg-white/10 text-slate-300 border border-white/20 rounded-full text-xs font-bold uppercase tracking-wider mb-4">Grades
+            6-8</span>
+          <p class="text-slate-300 font-light mb-6">Developing critical thinking and preparing students for advanced
+            studies.</p>
           <ul class="space-y-3">
-            <li class="flex items-start text-slate-300 text-sm"><span class="text-accent-gold mr-3 mt-0.5">✔</span> Core Subject Mastery</li>
-            <li class="flex items-start text-slate-300 text-sm"><span class="text-accent-gold mr-3 mt-0.5">✔</span> Project-Based Learning</li>
-            <li class="flex items-start text-slate-300 text-sm"><span class="text-accent-gold mr-3 mt-0.5">✔</span> STEM Integration</li>
-            <li class="flex items-start text-slate-300 text-sm"><span class="text-accent-gold mr-3 mt-0.5">✔</span> Leadership Development</li>
+            <li class="flex items-start text-slate-300 text-sm"><span class="text-accent-gold mr-3 mt-0.5">✔</span> Core
+              Subject Mastery</li>
+            <li class="flex items-start text-slate-300 text-sm"><span class="text-accent-gold mr-3 mt-0.5">✔</span>
+              Project-Based Learning</li>
+            <li class="flex items-start text-slate-300 text-sm"><span class="text-accent-gold mr-3 mt-0.5">✔</span> STEM
+              Integration</li>
+            <li class="flex items-start text-slate-300 text-sm"><span class="text-accent-gold mr-3 mt-0.5">✔</span>
+              Leadership Development</li>
           </ul>
         </div>
       </div>
 
       <!-- High School -->
-      <div class="bg-slate-50 rounded-3xl p-8 border border-slate-100 hover:-translate-y-2 hover:shadow-xl transition-all duration-300 animate-on-scroll delay-200 group">
-        <div class="w-16 h-16 bg-blue-50 text-primary-royal rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:scale-110 transition-transform duration-300">🌟</div>
+      <div
+        class="bg-slate-50 rounded-3xl p-8 border border-slate-100 hover:-translate-y-2 hover:shadow-xl transition-all duration-300 animate-on-scroll delay-200 group">
+        <div
+          class="w-16 h-16 bg-blue-50 text-primary-royal rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:scale-110 transition-transform duration-300">
+          🌟</div>
         <h3 class="text-2xl font-bold text-primary-navy mb-2">High School</h3>
-        <span class="inline-block px-3 py-1 bg-white border border-slate-200 text-slate-500 rounded-full text-xs font-bold uppercase tracking-wider mb-4">Grades 9-12</span>
+        <span
+          class="inline-block px-3 py-1 bg-white border border-slate-200 text-slate-500 rounded-full text-xs font-bold uppercase tracking-wider mb-4">Grades
+          9-12</span>
         <p class="text-slate-600 font-light mb-6">Rigorous preparation for university and future career success.</p>
         <ul class="space-y-3">
-          <li class="flex items-start text-slate-600 text-sm"><span class="text-accent-gold mr-3 mt-0.5">✔</span> Advanced Placement Courses</li>
-          <li class="flex items-start text-slate-600 text-sm"><span class="text-accent-gold mr-3 mt-0.5">✔</span> College Counseling</li>
-          <li class="flex items-start text-slate-600 text-sm"><span class="text-accent-gold mr-3 mt-0.5">✔</span> Research Projects</li>
-          <li class="flex items-start text-slate-600 text-sm"><span class="text-accent-gold mr-3 mt-0.5">✔</span> Internship Opportunities</li>
+          <li class="flex items-start text-slate-600 text-sm"><span class="text-accent-gold mr-3 mt-0.5">✔</span>
+            Advanced Placement Courses</li>
+          <li class="flex items-start text-slate-600 text-sm"><span class="text-accent-gold mr-3 mt-0.5">✔</span>
+            College Counseling</li>
+          <li class="flex items-start text-slate-600 text-sm"><span class="text-accent-gold mr-3 mt-0.5">✔</span>
+            Research Projects</li>
+          <li class="flex items-start text-slate-600 text-sm"><span class="text-accent-gold mr-3 mt-0.5">✔</span>
+            Internship Opportunities</li>
         </ul>
       </div>
     </div>
@@ -89,27 +123,39 @@
       <h2 class="text-3xl md:text-5xl font-bold text-primary-navy mb-6 tracking-tight">Our Teaching Approach</h2>
       <p class="text-lg text-slate-500 font-light">Innovative methodologies for effective learning</p>
     </div>
-    
+
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-      <div class="bg-white p-8 rounded-3xl shadow-sm border border-slate-100 animate-on-scroll group hover:shadow-xl transition-shadow">
-        <div class="text-5xl font-extrabold text-slate-100 group-hover:text-primary-royal/10 transition-colors mb-4">01</div>
+      <div
+        class="bg-white p-8 rounded-3xl shadow-sm border border-slate-100 animate-on-scroll group hover:shadow-xl transition-shadow">
+        <div class="text-5xl font-extrabold text-slate-700 group-hover:text-primary-royal/10 transition-colors mb-4">01
+        </div>
         <h3 class="text-xl font-bold text-primary-navy mb-3 relative z-10">Student-Centered</h3>
-        <p class="text-slate-500 text-sm leading-relaxed relative z-10">Personalized learning paths tailored to individual student needs and interests.</p>
+        <p class="text-slate-500 text-sm leading-relaxed relative z-10">Personalized learning paths tailored to
+          individual student needs and interests.</p>
       </div>
-      <div class="bg-white p-8 rounded-3xl shadow-sm border border-slate-100 animate-on-scroll delay-100 group hover:shadow-xl transition-shadow">
-        <div class="text-5xl font-extrabold text-slate-100 group-hover:text-primary-royal/10 transition-colors mb-4">02</div>
+      <div
+        class="bg-white p-8 rounded-3xl shadow-sm border border-slate-100 animate-on-scroll delay-100 group hover:shadow-xl transition-shadow">
+        <div class="text-5xl font-extrabold text-slate-700 group-hover:text-primary-royal/10 transition-colors mb-4">02
+        </div>
         <h3 class="text-xl font-bold text-primary-navy mb-3 relative z-10">Inquiry-Based</h3>
-        <p class="text-slate-500 text-sm leading-relaxed relative z-10">Encouraging curiosity and deep understanding through exploration and questioning.</p>
+        <p class="text-slate-500 text-sm leading-relaxed relative z-10">Encouraging curiosity and deep understanding
+          through exploration and questioning.</p>
       </div>
-      <div class="bg-white p-8 rounded-3xl shadow-sm border border-slate-100 animate-on-scroll delay-200 group hover:shadow-xl transition-shadow">
-        <div class="text-5xl font-extrabold text-slate-100 group-hover:text-primary-royal/10 transition-colors mb-4">03</div>
+      <div
+        class="bg-white p-8 rounded-3xl shadow-sm border border-slate-100 animate-on-scroll delay-200 group hover:shadow-xl transition-shadow">
+        <div class="text-5xl font-extrabold text-slate-700 group-hover:text-primary-royal/10 transition-colors mb-4">03
+        </div>
         <h3 class="text-xl font-bold text-primary-navy mb-3 relative z-10">Global Perspective</h3>
-        <p class="text-slate-500 text-sm leading-relaxed relative z-10">Integrating international standards and cultural awareness into all subjects.</p>
+        <p class="text-slate-500 text-sm leading-relaxed relative z-10">Integrating international standards and cultural
+          awareness into all subjects.</p>
       </div>
-      <div class="bg-white p-8 rounded-3xl shadow-sm border border-slate-100 animate-on-scroll delay-300 group hover:shadow-xl transition-shadow">
-        <div class="text-5xl font-extrabold text-slate-100 group-hover:text-primary-royal/10 transition-colors mb-4">04</div>
+      <div
+        class="bg-white p-8 rounded-3xl shadow-sm border border-slate-100 animate-on-scroll delay-300 group hover:shadow-xl transition-shadow">
+        <div class="text-5xl font-extrabold text-slate-700 group-hover:text-primary-royal/10 transition-colors mb-4">04
+        </div>
         <h3 class="text-xl font-bold text-primary-navy mb-3 relative z-10">Technology Integration</h3>
-        <p class="text-slate-500 text-sm leading-relaxed relative z-10">Using modern tools and digital resources to enhance learning experiences.</p>
+        <p class="text-slate-500 text-sm leading-relaxed relative z-10">Using modern tools and digital resources to
+          enhance learning experiences.</p>
       </div>
     </div>
   </div>
@@ -122,48 +168,60 @@
       <h2 class="text-3xl md:text-5xl font-bold text-primary-navy mb-6 tracking-tight">Curriculum Highlights</h2>
       <p class="text-lg text-slate-500 font-light">What makes our education unique</p>
     </div>
-    
+
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
       <div class="flex items-start p-6 bg-slate-50 rounded-2xl animate-on-scroll">
-        <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center text-2xl shadow-sm shrink-0 mr-4">🔬</div>
+        <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center text-2xl shadow-sm shrink-0 mr-4">
+          🔬</div>
         <div>
           <h3 class="text-lg font-bold text-primary-navy mb-2">STEM Focus</h3>
-          <p class="text-sm text-slate-500 leading-relaxed">Emphasis on Science, Technology, Engineering, and Mathematics with hands-on experiments.</p>
+          <p class="text-sm text-slate-500 leading-relaxed">Emphasis on Science, Technology, Engineering, and
+            Mathematics with hands-on experiments.</p>
         </div>
       </div>
       <div class="flex items-start p-6 bg-slate-50 rounded-2xl animate-on-scroll delay-100">
-        <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center text-2xl shadow-sm shrink-0 mr-4">🎨</div>
+        <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center text-2xl shadow-sm shrink-0 mr-4">
+          🎨</div>
         <div>
           <h3 class="text-lg font-bold text-primary-navy mb-2">Arts & Culture</h3>
-          <p class="text-sm text-slate-500 leading-relaxed">Rich arts program including visual arts, music, drama, and cultural studies.</p>
+          <p class="text-sm text-slate-500 leading-relaxed">Rich arts program including visual arts, music, drama, and
+            cultural studies.</p>
         </div>
       </div>
       <div class="flex items-start p-6 bg-slate-50 rounded-2xl animate-on-scroll delay-200">
-        <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center text-2xl shadow-sm shrink-0 mr-4">🏃</div>
+        <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center text-2xl shadow-sm shrink-0 mr-4">
+          🏃</div>
         <div>
           <h3 class="text-lg font-bold text-primary-navy mb-2">Sports & Athletics</h3>
-          <p class="text-sm text-slate-500 leading-relaxed">Comprehensive sports program promoting physical fitness and teamwork.</p>
+          <p class="text-sm text-slate-500 leading-relaxed">Comprehensive sports program promoting physical fitness and
+            teamwork.</p>
         </div>
       </div>
       <div class="flex items-start p-6 bg-slate-50 rounded-2xl animate-on-scroll">
-        <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center text-2xl shadow-sm shrink-0 mr-4">💻</div>
+        <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center text-2xl shadow-sm shrink-0 mr-4">
+          💻</div>
         <div>
           <h3 class="text-lg font-bold text-primary-navy mb-2">Digital Literacy</h3>
-          <p class="text-sm text-slate-500 leading-relaxed">Integration of technology across all subjects to prepare students for the digital age.</p>
+          <p class="text-sm text-slate-500 leading-relaxed">Integration of technology across all subjects to prepare
+            students for the digital age.</p>
         </div>
       </div>
       <div class="flex items-start p-6 bg-slate-50 rounded-2xl animate-on-scroll delay-100">
-        <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center text-2xl shadow-sm shrink-0 mr-4">🌍</div>
+        <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center text-2xl shadow-sm shrink-0 mr-4">
+          🌍</div>
         <div>
           <h3 class="text-lg font-bold text-primary-navy mb-2">Language Learning</h3>
-          <p class="text-sm text-slate-500 leading-relaxed">Multiple language options including English, Sinhala, and Tamil.</p>
+          <p class="text-sm text-slate-500 leading-relaxed">Multiple language options including English, Sinhala, and
+            Tamil.</p>
         </div>
       </div>
       <div class="flex items-start p-6 bg-slate-50 rounded-2xl animate-on-scroll delay-200">
-        <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center text-2xl shadow-sm shrink-0 mr-4">🤝</div>
+        <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center text-2xl shadow-sm shrink-0 mr-4">
+          🤝</div>
         <div>
           <h3 class="text-lg font-bold text-primary-navy mb-2">Community Service</h3>
-          <p class="text-sm text-slate-500 leading-relaxed">Opportunities for students to engage in community service and social responsibility.</p>
+          <p class="text-sm text-slate-500 leading-relaxed">Opportunities for students to engage in community service
+            and social responsibility.</p>
         </div>
       </div>
     </div>
