@@ -89,17 +89,30 @@ export class Navbar implements AfterViewInit {
 
   scrollToSection(sectionId: string): void {
     this.isMenuOpen = false;
-    
+
+    console.log('Scrolling to section:', sectionId);
     const element = document.getElementById(sectionId);
+    console.log('Element found:', element);
+
     if (element) {
-      const navbarHeight = 85;
-      const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
-      const offsetPosition = elementPosition - navbarHeight;
-      
-      // Force scroll
-      document.documentElement.scrollTop = offsetPosition;
-      document.body.scrollTop = offsetPosition;
-      window.scrollTo(0, offsetPosition);
+      console.log('Using scrollIntoView');
+      element.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      });
+
+      // Adjust for navbar height after scroll
+      setTimeout(() => {
+        const navbarHeight = 85;
+        const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
+        const offsetPosition = elementPosition - navbarHeight;
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'auto'
+        });
+      }, 100);
+    } else {
+      console.error('Element not found with ID:', sectionId);
     }
   }
 }
