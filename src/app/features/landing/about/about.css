@@ -15,7 +15,7 @@
   right: 0;
   bottom: 0;
   background: linear-gradient(135deg, rgba(30, 58, 138, 0.95) 0%, rgba(59, 130, 246, 0.9) 100%),
-              url('/images/hero-bg.png') center/cover no-repeat;
+    url('/images/hero-bg.png') center/cover no-repeat;
   z-index: -1;
 }
 
@@ -101,6 +101,7 @@
 /* Section Styles */
 section {
   padding: 80px 0;
+  margin-top: 50px;
 }
 
 .section-header {
@@ -263,6 +264,7 @@ section {
     opacity: 0;
     transform: translateY(30px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
