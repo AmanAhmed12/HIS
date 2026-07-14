@@ -8,7 +8,7 @@
 }
 
 .sidebar-header {
-  @apply flex items-center gap-3 p-6 border-b border-white/10 bg-white/5;
+  @apply flex items-center gap-3 p-4 border-b border-white/10 bg-white/5;
 }
 
 .sidebar-logo { @apply h-12 drop-shadow-lg; }
@@ -20,11 +20,11 @@
 }
 
 .sidebar-nav {
-  @apply flex-1 py-4;
+  @apply flex-1 py-2 overflow-y-auto;
 }
 
 .nav-item {
-  @apply flex items-center gap-3 px-6 py-3.5 text-white/70 transition-all duration-300 text-sm font-medium rounded-xl mx-2 my-1;
+  @apply flex items-center gap-3 px-4 py-2.5 text-white/70 transition-all duration-300 text-sm font-medium rounded-xl mx-2 my-0.5;
 }
 
 .nav-item:hover {
@@ -40,7 +40,7 @@
 }
 
 .sidebar-footer {
-  @apply p-5 border-t border-white/10 flex-shrink-0 bg-white/5;
+  @apply p-4 border-t border-white/10 flex-shrink-0 bg-white/5 mt-auto;
 }
 
 .admin-info {
@@ -119,11 +119,15 @@
   .action-grid {
     @apply grid-cols-2 md:grid-cols-4;
   }
+  
+  .sidebar-footer {
+    @apply p-4;
+  }
 }
 
 @media (max-width: 768px) {
   .admin-sidebar {
-    @apply -translate-x-full transition-transform duration-300;
+    @apply -translate-x-full transition-transform duration-300 w-64;
   }
   
   .admin-sidebar.open {
@@ -136,6 +140,14 @@
   
   .dashboard-grid {
     @apply grid-cols-1 md:grid-cols-2;
+  }
+  
+  .sidebar-footer {
+    @apply p-4;
+  }
+  
+  .logout-btn {
+    @apply py-2.5 text-xs;
   }
 }
 
