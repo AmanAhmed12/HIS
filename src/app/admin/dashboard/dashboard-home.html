@@ -1,57 +1,176 @@
-<header class="admin-header">
-  <h1>Dashboard</h1>
-  <span>Welcome back!</span>
-</header>
+@if (loading) {
+  <div class="loading-state">
+    <div class="spinner"></div>
+    <p>Loading dashboard data...</p>
+  </div>
+} @else {
+  <header class="admin-header">
+    <h1>Dashboard</h1>
+    <span>Welcome back, Admin!</span>
+  </header>
 
-<div class="dashboard-grid">
-  <div class="stat-card">
-    <div class="stat-icon">📰</div>
-    <div class="stat-info">
-      <h3>News & Events</h3>
-      <p class="stat-number">12</p>
+  <div class="dashboard-grid">
+    <div class="stat-card">
+      <div class="stat-icon">📰</div>
+      <div class="stat-info">
+        <h3>News & Events</h3>
+        <p class="stat-number">{{ stats.news }}</p>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon">📢</div>
+      <div class="stat-info">
+        <h3>Announcements</h3>
+        <p class="stat-number">{{ stats.announcements }}</p>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon">✉️</div>
+      <div class="stat-info">
+        <h3>Unread Messages</h3>
+        <p class="stat-number">{{ stats.unreadMessages }}</p>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon">🖼️</div>
+      <div class="stat-info">
+        <h3>Gallery Items</h3>
+        <p class="stat-number">{{ stats.galleryItems }}</p>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon">🏢</div>
+      <div class="stat-info">
+        <h3>Facilities</h3>
+        <p class="stat-number">{{ stats.facilities }}</p>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon">📥</div>
+      <div class="stat-info">
+        <h3>Downloads</h3>
+        <p class="stat-number">{{ stats.downloads }}</p>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon">🏆</div>
+      <div class="stat-info">
+        <h3>Achievements</h3>
+        <p class="stat-number">{{ stats.achievements }}</p>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon">📋</div>
+      <div class="stat-info">
+        <h3>Admissions</h3>
+        <p class="stat-number">{{ stats.admissions }}</p>
+      </div>
     </div>
   </div>
-  <div class="stat-card">
-    <div class="stat-icon">📢</div>
-    <div class="stat-info">
-      <h3>Announcements</h3>
-      <p class="stat-number">8</p>
-    </div>
-  </div>
-  <div class="stat-card">
-    <div class="stat-icon">✉️</div>
-    <div class="stat-info">
-      <h3>Unread Messages</h3>
-      <p class="stat-number">5</p>
-    </div>
-  </div>
-  <div class="stat-card">
-    <div class="stat-icon">🖼️</div>
-    <div class="stat-info">
-      <h3>Gallery Items</h3>
-      <p class="stat-number">24</p>
-    </div>
-  </div>
-</div>
 
-<div class="quick-actions">
-  <h2>Quick Actions</h2>
-  <div class="action-grid">
-    <a routerLink="/admin/dashboard/news" class="action-card">
-      <span class="action-icon">📰</span>
-      <span>Manage News</span>
-    </a>
-    <a routerLink="/admin/dashboard/gallery" class="action-card">
-      <span class="action-icon">🖼️</span>
-      <span>Manage Gallery</span>
-    </a>
-    <a routerLink="/admin/dashboard/announcements" class="action-card">
-      <span class="action-icon">📢</span>
-      <span>Announcements</span>
-    </a>
-    <a routerLink="/admin/dashboard/school-info" class="action-card">
-      <span class="action-icon">🏫</span>
-      <span>School Info</span>
-    </a>
+  <div class="charts-section">
+    <div class="chart-row">
+      <div class="chart-card">
+        <h3>Monthly Activity</h3>
+        <div class="css-chart-container">
+          <div class="activity-chart">
+            @for (item of monthlyActivity; track item.label) {
+              <div class="activity-bar-group">
+                <span class="activity-label">{{ item.label }}</span>
+                <div class="activity-bars">
+                  <div class="activity-bar news" [style.height.%]="(item.news / 30) * 100" title="News: {{ item.news }}"></div>
+                  <div class="activity-bar announcements" [style.height.%]="(item.announcements / 20) * 100" title="Announcements: {{ item.announcements }}"></div>
+                </div>
+              </div>
+            }
+          </div>
+          <div class="chart-legend">
+            <div class="legend-item">
+              <div class="legend-color news"></div>
+              <span>News & Events</span>
+            </div>
+            <div class="legend-item">
+              <div class="legend-color announcements"></div>
+              <span>Announcements</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="chart-card">
+        <h3>Content Distribution</h3>
+        <div class="css-chart-container">
+          <div class="bar-chart">
+            @for (item of contentDistribution; track item.label) {
+              <div class="bar-item">
+                <span class="bar-label">{{ item.label }}</span>
+                <div class="bar-track">
+                  <div class="bar-fill" [style.width.%]="(item.value / 156) * 100" [style.background-color]="item.color"></div>
+                </div>
+                <span class="bar-value">{{ item.value }}</span>
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="chart-row">
+      <div class="chart-card chart-card-full">
+        <h3>Admissions Status</h3>
+        <div class="css-chart-container">
+          <div class="pie-chart">
+            @for (item of admissionsStatus; track item.label) {
+              <div class="pie-segment" [style.flex]="item.value" [style.background-color]="item.color">
+                <div class="pie-label">
+                  <span class="pie-label-text">{{ item.label }}</span>
+                  <span class="pie-value">{{ item.value }}</span>
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-</div>
+
+  <div class="quick-actions">
+    <h2>Quick Actions</h2>
+    <div class="action-grid">
+      <a routerLink="/admin/dashboard/news" class="action-card">
+        <span class="action-icon">📰</span>
+        <span>Manage News</span>
+      </a>
+      <a routerLink="/admin/dashboard/gallery" class="action-card">
+        <span class="action-icon">🖼️</span>
+        <span>Manage Gallery</span>
+      </a>
+      <a routerLink="/admin/dashboard/announcements" class="action-card">
+        <span class="action-icon">📢</span>
+        <span>Announcements</span>
+      </a>
+      <a routerLink="/admin/dashboard/school-info" class="action-card">
+        <span class="action-icon">🏫</span>
+        <span>School Info</span>
+      </a>
+      <a routerLink="/admin/dashboard/facilities" class="action-card">
+        <span class="action-icon">🏢</span>
+        <span>Facilities</span>
+      </a>
+      <a routerLink="/admin/dashboard/downloads" class="action-card">
+        <span class="action-icon">📥</span>
+        <span>Downloads</span>
+      </a>
+      <a routerLink="/admin/dashboard/achievements" class="action-card">
+        <span class="action-icon">🏆</span>
+        <span>Achievements</span>
+      </a>
+      <a routerLink="/admin/dashboard/contact" class="action-card">
+        <span class="action-icon">✉️</span>
+        <span>Contact</span>
+      </a>
+      <a routerLink="/admin/dashboard/admissions" class="action-card">
+        <span class="action-icon">📋</span>
+        <span>Admissions</span>
+      </a>
+    </div>
+  </div>
+}
