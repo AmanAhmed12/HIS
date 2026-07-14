@@ -1,8 +1,11 @@
-import { Component, signal, inject } from '@angular/core';
+import { Component, signal, inject, OnInit, ChangeDetectorRef } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ContactService } from './contact.service';
-import { ContactMessage } from '../../../shared/models';
+import { SchoolInfoService } from '../../../core/services/school-info.service';
+import { ContactMessage, Download } from '../../../shared/models';
+import { SchoolInfo } from '../../../shared/models';
+import { HttpClient } from '@angular/common/http';
 
 interface FormErrors {
   name: string;
@@ -17,14 +20,54 @@ interface FormErrors {
   templateUrl: './contact.html',
   styleUrl: './contact.css'
 })
-export class Contact {
+export class Contact implements OnInit {
   private contactService = inject(ContactService);
+  private schoolInfoService = inject(SchoolInfoService);
+  private http = inject(HttpClient);
+  private cdr = inject(ChangeDetectorRef);
 
   form: ContactMessage = { name: '', email: '', phone: '', subject: '', message: '' };
   isSubmitting = signal(false);
   submitted = signal(false);
   errorMessage = signal<string | null>(null);
   formErrors = signal<FormErrors>({ name: '', email: '', message: '' });
+
+  schoolInfo: SchoolInfo[] = [];
+  downloads: Download[] = [];
+  loading = true;
+
+  ngOnInit(): void {
+    this.loadContactInfo();
+  }
+
+  loadContactInfo(): void {
+    this.schoolInfoService.getAll().subscribe({
+      next: (data) => {
+        this.schoolInfo = data;
+        this.checkLoading();
+      },
+      error: (error) => {
+        console.error('School info error:', error);
+        this.checkLoading();
+      }
+    });
+
+    this.http.get<Download[]>('http://localhost:8080/api/v1/public/downloads').subscribe({
+      next: (data) => {
+        this.downloads = data;
+        this.checkLoading();
+      },
+      error: (error) => {
+        console.error('Downloads error:', error);
+        this.checkLoading();
+      }
+    });
+  }
+
+  private checkLoading(): void {
+    this.loading = false;
+    this.cdr.detectChanges();
+  }
 
   validateForm(): boolean {
     const errors: FormErrors = { name: '', email: '', message: '' };
@@ -76,5 +119,23 @@ export class Contact {
     if (currentErrors[field]) {
       this.formErrors.set({ ...currentErrors, [field]: '' });
     }
+  }
+
+  getSchoolInfoValue(key: string): string {
+    const item = this.schoolInfo.find(s => s.key === key);
+    return item ? item.value : '';
+  }
+
+  getDownloadsByCategory(category: string): Download[] {
+    return this.downloads.filter(d => d.category === category);
+  }
+
+  getDownloadCategories(): string[] {
+    const categories = [...new Set(this.downloads.map(d => d.category))];
+    return categories.sort();
+  }
+
+  downloadFile(download: Download): void {
+    window.open(download.fileUrl, '_blank');
   }
 }

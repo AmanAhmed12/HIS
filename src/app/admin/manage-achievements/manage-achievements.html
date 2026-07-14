@@ -47,7 +47,7 @@
               }
               <div class="achievement-title">
                 <h3>{{ achievement.title }}</h3>
-                <span class="achievement-year">{{ achievement.year }}</span>
+                <span class="achievement-year">{{ achievement.achievementDate }}</span>
               </div>
             </div>
             <p class="achievement-description">{{ achievement.description }}</p>
@@ -86,14 +86,13 @@
         </div>
 
         <div class="form-group">
-          <label for="year">Year *</label>
+          <label for="achievementDate">Achievement Date</label>
           <input
-            type="number"
-            id="year"
-            [(ngModel)]="form.year"
-            name="year"
-            required
-            placeholder="Enter year"
+            type="text"
+            id="achievementDate"
+            [(ngModel)]="form.achievementDate"
+            name="achievementDate"
+            placeholder="Enter achievement date (e.g., 2024 or January 2024)"
           >
         </div>
 

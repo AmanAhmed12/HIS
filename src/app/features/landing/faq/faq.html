@@ -1,40 +1,66 @@
-<section id="faq" class="section faq-section">
-  <div class="container">
-    <div class="faq-header">
-      <div class="hero-subtitle">Got Questions?</div>
-      <h2>Frequently Asked Questions</h2>
-    </div>
-    
-    <div class="faq-grid">
-      <div class="faq-item">
-        <div class="faq-question">
-          What curriculum does the school follow?
-          <span>+</span>
-        </div>
-        <div class="faq-answer">
-          We follow an internationally recognized curriculum that prepares students for global examinations, offering a modern alternative to the national system.
-        </div>
-      </div>
-      
-      <div class="faq-item">
-        <div class="faq-question">
-          Is the school affiliated with any associations?
-          <span>+</span>
-        </div>
-        <div class="faq-answer">
-          Yes, we are a proud member of the Association of International Schools in Sri Lanka (AISL), ensuring our standards meet high educational benchmarks.
-        </div>
-      </div>
+<!-- Hero -->
+<section class="relative min-h-[40vh] flex items-center justify-center pt-24 pb-16 overflow-hidden">
+  <div class="absolute inset-0 z-0">
+    <div class="absolute inset-0 bg-gradient-to-br from-primary-navy/95 via-primary-royal/90 to-slate-700/80 z-10"></div>
+    <img src="/images/hero-bg.png" alt="FAQ background" loading="eager" class="w-full h-full object-cover">
+  </div>
+  <div class="container mx-auto px-6 relative z-10 text-center">
+    <span class="inline-block px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-accent-gold text-sm font-bold tracking-widest uppercase mb-6">Got Questions?</span>
+    <h1 class="text-4xl md:text-5xl font-extrabold text-white mb-4 leading-tight">Frequently Asked Questions</h1>
+    <p class="text-lg text-slate-200 max-w-xl mx-auto font-light">Find answers to the most common questions parents and students ask about our school.</p>
+  </div>
+</section>
 
-      <div class="faq-item">
-        <div class="faq-question">
-          Do you offer early childhood education?
-          <span>+</span>
+<!-- FAQ Accordion -->
+<section class="py-20 bg-slate-50">
+  <div class="container mx-auto px-6">
+    <div class="max-w-3xl mx-auto space-y-4">
+      @for (item of [0, 1, 2]; track item) {
+        <div class="bg-white rounded-2xl shadow-sm border hover:shadow-md transition-shadow"
+             [class.border-primary-royal]="isExpanded(item)"
+             [class.border-slate-200]="!isExpanded(item)">
+          <button class="w-full text-left px-8 py-6 flex justify-between items-center focus:outline-none"
+                  (click)="toggleItem(item)"
+                  [attr.aria-expanded]="isExpanded(item)"
+                  (keydown)="handleKeydown($event, item)">
+            <span class="font-bold text-lg text-primary-navy pr-4">
+              @if (item === 0) { What curriculum does the school follow? }
+              @else if (item === 1) { Is the school affiliated with any associations? }
+              @else { Do you offer early childhood education? }
+            </span>
+            <div class="w-8 h-8 rounded-full bg-slate-50 border border-slate-200 flex items-center justify-center text-primary-royal shrink-0 transition-transform duration-300"
+                 [class.rotate-180]="isExpanded(item)"
+                 [class.bg-primary-royal]="isExpanded(item)"
+                 [class.text-white]="isExpanded(item)"
+                 [class.border-transparent]="isExpanded(item)">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <polyline points="6 9 12 15 18 9"/>
+              </svg>
+            </div>
+          </button>
+          <div class="overflow-hidden transition-all duration-300 ease-in-out"
+               [style.max-height]="isExpanded(item) ? '400px' : '0'"
+               [style.opacity]="isExpanded(item) ? '1' : '0'">
+            <div class="px-8 pb-8 text-slate-600 font-light leading-relaxed text-base border-t border-slate-100 pt-4">
+              @if (item === 0) {
+                We follow an internationally recognized curriculum that prepares students for global examinations, offering a modern alternative to the national system. Our programs span from Primary to High School with rigorous academic standards.
+              } @else if (item === 1) {
+                Yes, we are a proud member of the Association of International Schools in Sri Lanka (AISL), ensuring our standards meet high educational benchmarks. This affiliation validates our commitment to quality international education.
+              } @else {
+                Yes, we have an affiliated Early Learning Centre that caters to preschool-aged children in a safe, nurturing environment, building foundational skills through play-based learning before formal schooling begins.
+              }
+            </div>
+          </div>
         </div>
-        <div class="faq-answer">
-          Yes, we have an affiliated Early Learning Centre that caters to preschool-aged children in a safe, nurturing environment.
-        </div>
-      </div>
+      }
+    </div>
+
+    <!-- Still have questions CTA -->
+    <div class="mt-16 max-w-3xl mx-auto text-center">
+      <p class="text-slate-500 font-light mb-6 text-lg">Still have questions? Our admissions team is happy to help.</p>
+      <a href="/contact" class="inline-flex items-center gap-2 bg-primary-navy text-white font-bold px-8 py-4 rounded-full hover:bg-primary-royal transition-colors shadow-lg">
+        Contact Us →
+      </a>
     </div>
   </div>
 </section>

@@ -1,7 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, inject, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { signal, computed } from '@angular/core';
+import { signal } from '@angular/core';
+import { SchoolInfoService } from '../../../core/services/school-info.service';
+import { SchoolInfo } from '../../../shared/models';
 
 @Component({
   selector: 'app-admissions',
@@ -10,10 +12,12 @@ import { signal, computed } from '@angular/core';
   templateUrl: './admissions.html',
   styleUrl: './admissions.css'
 })
-export class Admissions {
-  isSubmitting = signal(false);
-  submitted = signal(false);
-  errorMessage = signal('');
+export class Admissions implements OnInit {
+  private schoolInfoService = inject(SchoolInfoService);
+  private cdr = inject(ChangeDetectorRef);
+
+  schoolInfo: SchoolInfo[] = [];
+  loading = true;
 
   form = {
     studentName: '',
@@ -28,6 +32,34 @@ export class Admissions {
     message: ''
   };
 
+  isSubmitting = signal(false);
+  submitted = signal(false);
+  errorMessage = signal('');
+
+  ngOnInit(): void {
+    this.loadContent();
+  }
+
+  loadContent(): void {
+    this.schoolInfoService.getAll().subscribe({
+      next: (data) => {
+        this.schoolInfo = data;
+        this.loading = false;
+        this.cdr.detectChanges();
+      },
+      error: (error) => {
+        console.error('Admissions data error:', error);
+        this.loading = false;
+        this.cdr.detectChanges();
+      }
+    });
+  }
+
+  getSchoolInfoValue(key: string): string {
+    const item = this.schoolInfo.find(s => s.key === key);
+    return item ? item.value : '';
+  }
+
   onSubmit() {
     if (!this.form.studentName || !this.form.parentName || !this.form.email || !this.form.phone) {
       this.errorMessage.set('Please fill in all required fields.');
@@ -37,7 +69,6 @@ export class Admissions {
     this.isSubmitting.set(true);
     this.errorMessage.set('');
 
-    // Simulate API call - replace with actual service call
     setTimeout(() => {
       this.isSubmitting.set(false);
       this.submitted.set(true);
@@ -59,5 +90,33 @@ export class Admissions {
   resetForm() {
     this.submitted.set(false);
     this.errorMessage.set('');
+  }
+
+  scrollToForm() {
+    const element = document.getElementById('application-form');
+    if (element) {
+      const navbarHeight = 85;
+      const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
+      const offsetPosition = elementPosition - navbarHeight;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
+    }
+  }
+
+  scrollToRequirements() {
+    const element = document.getElementById('requirements');
+    if (element) {
+      const navbarHeight = 85;
+      const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
+      const offsetPosition = elementPosition - navbarHeight;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
+    }
   }
 }

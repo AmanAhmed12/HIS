@@ -27,32 +27,125 @@
   } @else {
     @for (category of getCategories(); track category) {
       <div class="form-section">
-        <h2>{{ category }}</h2>
-        <div class="form-grid">
-          @for (item of getCategoryItems(category); track item.id) {
-            <div class="form-group" [class.full-width]="item.key.includes('description') || item.key.includes('about')">
-              <label [for]="item.key">{{ formatKey(item.key) }}</label>
-              @if (editingItem()?.id === item.id) {
-                <input
-                  [id]="item.key"
-                  type="text"
-                  class="form-control"
-                  [(ngModel)]="form.value"
-                  [name]="item.key"
-                  (blur)="saveForm()"
-                >
-              } @else {
-                <input
-                  [id]="item.key"
-                  type="text"
-                  class="form-control"
-                  [value]="item.value"
-                  (focus)="openEditForm(item)"
-                >
+        <div class="section-header">
+          <h2>{{ category }}</h2>
+          <button class="btn btn-primary btn-sm" (click)="openAddForm(category)">+ Add Custom Key</button>
+        </div>
+        
+        <!-- Missing Keys Warning -->
+        @if (getMissingKeys(category).length > 0) {
+          <div class="alert alert-warning">
+            <strong>Missing expected keys:</strong> {{ getMissingKeys(category).join(', ') }}
+          </div>
+        }
+        
+        <!-- Expected Keys Grid -->
+        @if (categoryKeys[category]) {
+          <div class="expected-keys-section">
+            <h3>Expected Keys for {{ category }}</h3>
+            <div class="form-grid">
+              @for (expectedKey of categoryKeys[category]; track expectedKey) {
+                @if (getCategoryItems(category).find(item => item.key === expectedKey)) {
+                  <div class="form-group has-value" [class.full-width]="expectedKey.includes('description')">
+                    <div class="form-group-header">
+                      <label>{{ formatKey(expectedKey) }}</label>
+                      <span class="status-badge filled">✓</span>
+                    </div>
+                    <input
+                      type="text"
+                      class="form-control"
+                      [value]="getCategoryItems(category).find(item => item.key === expectedKey)?.value"
+                      (focus)="openEditForm(getCategoryItems(category).find(item => item.key === expectedKey)!)"
+                    >
+                  </div>
+                } @else {
+                  <div class="form-group missing-value" [class.full-width]="expectedKey.includes('description')">
+                    <div class="form-group-header">
+                      <label>{{ formatKey(expectedKey) }}</label>
+                      <span class="status-badge missing">+</span>
+                    </div>
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="Click to add value"
+                      (focus)="openAddFormWithKey(category, expectedKey)"
+                    >
+                  </div>
+                }
               }
             </div>
-          }
-        </div>
+          </div>
+        }
+        
+        <!-- Custom Keys Section -->
+        @if (getCategoryItems(category).filter(item => !categoryKeys[category]?.includes(item.key)).length > 0) {
+          <div class="custom-keys-section">
+            <h3>Custom Keys</h3>
+            <div class="form-grid">
+              @for (item of getCategoryItems(category).filter(item => !categoryKeys[category]?.includes(item.key)); track item.id) {
+                <div class="form-group" [class.full-width]="item.key.includes('description')">
+                  <div class="form-group-header">
+                    <label>{{ formatKey(item.key) }}</label>
+                    <button class="btn-icon" (click)="deleteItem(item)" title="Delete">×</button>
+                  </div>
+                  @if (editingItem()?.id === item.id) {
+                    <input
+                      type="text"
+                      class="form-control"
+                      [(ngModel)]="form.value"
+                      (blur)="saveForm()"
+                    >
+                  } @else {
+                    <input
+                      type="text"
+                      class="form-control"
+                      [value]="item.value"
+                      (focus)="openEditForm(item)"
+                    >
+                  }
+                </div>
+              }
+            </div>
+          </div>
+        }
+        
+        <!-- Add Custom Key Form -->
+        @if (showAddForm() && form.category === category && !form.key) {
+          <div class="add-form">
+            <h4>Add Custom Key</h4>
+            <div class="form-group">
+              <label for="add-key">Key</label>
+              <input id="add-key" type="text" class="form-control" [(ngModel)]="form.key" name="key" placeholder="Enter custom key">
+            </div>
+            <div class="form-group">
+              <label for="add-value">Value</label>
+              <input id="add-value" type="text" class="form-control" [(ngModel)]="form.value" name="value" placeholder="Enter value">
+            </div>
+            <div class="form-actions">
+              <button class="btn btn-primary" (click)="saveForm()" [disabled]="isSaving()">Save</button>
+              <button class="btn btn-outline" (click)="cancelForm()">Cancel</button>
+            </div>
+          </div>
+        }
+        
+        <!-- Add Expected Key Form -->
+        @if (showAddForm() && form.category === category && form.key) {
+          <div class="add-form">
+            <h4>Add Value for {{ formatKey(form.key) }}</h4>
+            <div class="form-group">
+              <label>Key</label>
+              <input type="text" class="form-control" [value]="form.key" disabled>
+            </div>
+            <div class="form-group">
+              <label for="add-value">Value</label>
+              <input id="add-value" type="text" class="form-control" [(ngModel)]="form.value" name="value" placeholder="Enter value">
+            </div>
+            <div class="form-actions">
+              <button class="btn btn-primary" (click)="saveForm()" [disabled]="isSaving()">Save</button>
+              <button class="btn btn-outline" (click)="cancelForm()">Cancel</button>
+            </div>
+          </div>
+        }
       </div>
     }
   }

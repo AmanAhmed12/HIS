@@ -31,4 +31,10 @@ export class DownloadService {
   delete(id: number): Observable<void> {
     return this.api.delete<void>(`/admin/downloads/${id}`);
   }
+
+  uploadFile(file: File): Observable<{ url: string }> {
+    const formData = new FormData();
+    formData.append('file', file);
+    return this.api.upload<{ url: string }>('/admin/downloads/upload', formData);
+  }
 }

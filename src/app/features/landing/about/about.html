@@ -1,27 +1,129 @@
-<section id="about" class="section about-section">
-  <div class="container about-grid">
-    <div class="about-image-container">
-      <!-- Using a placeholder for now since we haven't generated an about image, or I can use the hero bg -->
-      <img src="/images/hero-bg.png" alt="School Campus" class="about-image">
-    </div>
-    
-    <div class="about-content">
-      <div class="hero-subtitle">Our History</div>
-      <h2>A Legacy of Excellence Since 2004</h2>
-      <p>
-        Located in the beautiful hills of Madawala Bazaar, Hill Country International School has been a beacon of knowledge for almost two decades. We believe in providing an international standard of education that is accessible while remaining deeply rooted in our community values.
+<!-- Hero Section -->
+<section class="relative min-h-[60vh] flex items-center justify-center pt-24 pb-16 overflow-hidden">
+  <div class="absolute inset-0 z-0">
+    <div class="absolute inset-0 bg-gradient-to-br from-primary-navy/95 via-primary-royal/90 to-accent-cyan/80 mix-blend-multiply z-10"></div>
+    <img src="/images/hero-bg.png" alt="About background" loading="eager" class="w-full h-full object-cover object-center">
+  </div>
+  
+  <div class="container mx-auto px-6 relative z-10 text-center animate-on-scroll">
+    @if (loading) {
+      <div class="flex justify-center my-20">
+        <div class="w-12 h-12 border-4 border-white/20 border-t-white rounded-full animate-spin"></div>
+      </div>
+    } @else {
+      <span class="inline-block px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-accent-gold text-sm font-bold tracking-widest uppercase mb-6 shadow-lg">
+        {{ getSchoolInfoValue('about_subtitle') || 'Our Story' }}
+      </span>
+      <h1 class="text-4xl md:text-6xl font-extrabold text-white mb-6 leading-tight max-w-4xl mx-auto">
+        {{ getSchoolInfoValue('about_title') || 'About Hill Country International School' }}
+      </h1>
+      <p class="text-lg md:text-xl text-slate-200 max-w-2xl mx-auto font-light leading-relaxed">
+        {{ getSchoolInfoValue('about_description') || 'A legacy of excellence in international education since 2004' }}
       </p>
+    }
+  </div>
+</section>
+
+<!-- Vision & Mission -->
+<section class="py-24 bg-slate-50 relative">
+  <div class="container mx-auto px-6">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-5xl mx-auto">
+      <!-- Vision -->
+      <div class="bg-white rounded-3xl p-10 shadow-xl shadow-slate-200/50 border border-slate-100 hover:-translate-y-2 transition-transform duration-500 animate-on-scroll delay-100 group relative overflow-hidden">
+        <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary-navy to-primary-royal"></div>
+        <div class="w-16 h-16 bg-blue-50 text-primary-royal rounded-2xl flex items-center justify-center text-3xl mb-8 group-hover:scale-110 transition-transform duration-300">🎯</div>
+        <h2 class="text-2xl font-bold text-primary-navy mb-4">Our Vision</h2>
+        <p class="text-slate-600 leading-relaxed font-light">{{ getSchoolInfoValue('about_vision') || 'To nurture global citizens equipped with critical thinking, compassion, and the skills to thrive in a dynamic world.' }}</p>
+      </div>
       
-      <div class="mission-vision">
-        <div class="mv-card">
-          <h4>Our Vision</h4>
-          <p>To nurture global citizens equipped with critical thinking, compassion, and the skills to thrive in a dynamic world.</p>
-        </div>
-        <div class="mv-card">
-          <h4>Our Mission</h4>
-          <p>Delivering an innovative international curriculum in a safe, inspiring environment that empowers every student.</p>
-        </div>
+      <!-- Mission -->
+      <div class="bg-white rounded-3xl p-10 shadow-xl shadow-slate-200/50 border border-slate-100 hover:-translate-y-2 transition-transform duration-500 animate-on-scroll delay-200 group relative overflow-hidden">
+        <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-accent-gold to-yellow-400"></div>
+        <div class="w-16 h-16 bg-amber-50 text-accent-gold rounded-2xl flex items-center justify-center text-3xl mb-8 group-hover:scale-110 transition-transform duration-300">🚀</div>
+        <h2 class="text-2xl font-bold text-primary-navy mb-4">Our Mission</h2>
+        <p class="text-slate-600 leading-relaxed font-light">{{ getSchoolInfoValue('about_mission') || 'Delivering an innovative international curriculum in a safe, inspiring environment that empowers every student.' }}</p>
       </div>
     </div>
   </div>
 </section>
+
+<!-- Stats Section -->
+<section class="py-24 bg-primary-navy relative overflow-hidden text-white">
+  <div class="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white via-transparent to-transparent"></div>
+  <div class="container mx-auto px-6 relative z-10">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+      <div class="animate-on-scroll">
+        <div class="text-5xl font-extrabold text-accent-gold mb-2 highlight-number" data-target="20">0</div>
+        <div class="text-slate-300 font-medium uppercase tracking-wider text-sm">Years of Excellence</div>
+      </div>
+      <div class="animate-on-scroll delay-100">
+        <div class="text-5xl font-extrabold text-accent-gold mb-2 highlight-number" data-target="500">0</div>
+        <div class="text-slate-300 font-medium uppercase tracking-wider text-sm">Students</div>
+      </div>
+      <div class="animate-on-scroll delay-200">
+        <div class="text-5xl font-extrabold text-accent-gold mb-2 highlight-number" data-target="50">0</div>
+        <div class="text-slate-300 font-medium uppercase tracking-wider text-sm">Qualified Teachers</div>
+      </div>
+      <div class="animate-on-scroll delay-300">
+        <div class="text-5xl font-extrabold text-accent-gold mb-2 highlight-number" data-target="100">0</div>
+        <div class="text-slate-300 font-medium uppercase tracking-wider text-sm">University Placement</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Facilities Section -->
+@if (facilities.length > 0) {
+  <section class="py-24 bg-white">
+    <div class="container mx-auto px-6">
+      <div class="text-center max-w-3xl mx-auto mb-16 animate-on-scroll">
+        <span class="text-primary-royal font-bold tracking-widest uppercase text-sm mb-2 block">Campus Life</span>
+        <h2 class="text-3xl md:text-5xl font-bold text-primary-navy mb-6 tracking-tight">Our Facilities</h2>
+        <p class="text-lg text-slate-500 font-light">State-of-the-art infrastructure designed to foster holistic development and a love for learning.</p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        @for (facility of facilities; track facility.id; let i = $index) {
+          <div class="bg-slate-50 rounded-3xl p-8 text-center hover:bg-white hover:shadow-xl hover:-translate-y-2 transition-all duration-300 border border-transparent hover:border-slate-100 group animate-on-scroll" [style.transition-delay]="(i * 0.1) + 's'">
+            <div class="w-20 h-20 mx-auto bg-white rounded-full shadow-md flex items-center justify-center text-4xl mb-6 group-hover:scale-110 group-hover:text-primary-royal transition-all duration-300">
+              {{ facility.icon || '🏫' }}
+            </div>
+            <h3 class="text-xl font-bold text-primary-navy mb-3">{{ facility.name }}</h3>
+            <p class="text-slate-500 text-sm leading-relaxed">{{ facility.description }}</p>
+          </div>
+        }
+      </div>
+    </div>
+  </section>
+}
+
+<!-- Achievements Section -->
+@if (achievements.length > 0) {
+  <section class="py-24 bg-slate-50">
+    <div class="container mx-auto px-6">
+      <div class="text-center max-w-3xl mx-auto mb-16 animate-on-scroll">
+        <h2 class="text-3xl md:text-5xl font-bold text-primary-navy mb-6 tracking-tight">Our Achievements</h2>
+        <p class="text-lg text-slate-500 font-light">Celebrating excellence in education, sports, and beyond.</p>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        @for (achievement of achievements; track achievement.id; let i = $index) {
+          <div class="bg-white rounded-3xl overflow-hidden shadow-lg shadow-slate-200/50 border border-slate-100 hover:shadow-xl hover:-translate-y-2 transition-all duration-300 animate-on-scroll flex flex-col" [style.transition-delay]="(i * 0.1) + 's'">
+            @if (achievement.imageUrl) {
+              <div class="h-48 overflow-hidden shrink-0">
+                <img [src]="achievement.imageUrl" alt="Achievement" loading="lazy" class="w-full h-full object-cover">
+              </div>
+            }
+            <div class="p-8 flex flex-col flex-grow">
+              <h3 class="text-xl font-bold text-primary-navy mb-3">{{ achievement.title }}</h3>
+              <p class="text-slate-600 text-sm leading-relaxed mb-6 flex-grow">{{ achievement.description }}</p>
+              @if (achievement.achievementDate) {
+                <div class="text-xs font-medium text-slate-400 uppercase tracking-wide border-t border-slate-100 pt-4 mt-auto">
+                  {{ formatDate(achievement.achievementDate) }}
+                </div>
+              }
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  </section>
+}

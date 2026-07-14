@@ -36,6 +36,8 @@ export interface Announcement {
   priority: string;
   isActive: boolean;
   expiresAt: string;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 export interface Facility {
@@ -51,8 +53,13 @@ export interface Achievement {
   id: number;
   title: string;
   description: string;
-  year: number;
   imageUrl?: string;
+  category?: string;
+  achievementDate?: string;
+  displayOrder?: number;
+  isActive?: boolean;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 export interface Download {

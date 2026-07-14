@@ -1,21 +1,68 @@
 .footer {
-  @apply bg-[#051229] text-white py-16 pb-8;
+  @apply bg-gradient-to-br from-[#0f172a] via-[#1e293b] to-[#3730a3] text-white py-16 pb-8;
+  position: relative;
+  overflow: hidden;
+}
+
+.footer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="1" fill="rgba(255,255,255,0.03)"/></svg>');
+  background-size: 40px 40px;
+  animation: footerPattern 30s linear infinite;
+}
+
+@keyframes footerPattern {
+  0% { background-position: 0 0; }
+  100% { background-position: 40px 40px; }
 }
 
 .footer-grid {
   @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 mb-12;
+  position: relative;
+  z-index: 1;
 }
 
 .footer-brand .logo-text {
   @apply text-white mb-4;
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1.3;
 }
 
 .footer-brand p {
   @apply text-white/70 leading-relaxed max-w-md;
+  transition: color 0.3s ease;
+}
+
+.footer-brand:hover p {
+  @apply text-white/90;
 }
 
 .footer-links h4 {
   @apply text-white mb-6 text-xl font-semibold;
+  position: relative;
+  display: inline-block;
+}
+
+.footer-links h4::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 0;
+  width: 40px;
+  height: 2px;
+  background: linear-gradient(90deg, #f59e0b, #d97706);
+  border-radius: 2px;
+  transition: width 0.3s ease;
+}
+
+.footer-links:hover h4::after {
+  width: 100%;
 }
 
 .footer-links ul {
@@ -24,14 +71,39 @@
 
 .footer-links a {
   @apply text-white/70 transition-all duration-300;
+  position: relative;
+  display: inline-block;
+}
+
+.footer-links a::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 0;
+  height: 1px;
+  background: #f59e0b;
+  transition: width 0.3s ease;
 }
 
 .footer-links a:hover {
-  @apply text-yellow-500 pl-1;
+  @apply text-amber-500;
+  padding-left: 8px;
+}
+
+.footer-links a:hover::before {
+  width: calc(100% - 8px);
 }
 
 .footer-bottom {
   @apply text-center pt-8 border-t border-white/10 text-white/50 text-sm;
+  position: relative;
+  z-index: 1;
+  transition: color 0.3s ease;
+}
+
+.footer-bottom:hover {
+  @apply text-white/70;
 }
 
 @media (max-width: 768px) {

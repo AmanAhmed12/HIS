@@ -68,9 +68,9 @@ export class ManageNews implements OnInit {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files[0]) {
       const file = input.files[0];
-      const maxSize = 50 * 1024 * 1024; // 50MB
+      const maxSize = 10 * 1024 * 1024; // 10MB (Cloudinary free plan limit)
       if (file.size > maxSize) {
-        this.errorMessage.set('File size exceeds 50MB limit. Please select a smaller file.');
+        this.errorMessage.set('File size exceeds 10MB limit. Please select a smaller file.');
         setTimeout(() => this.errorMessage.set(null), 5000);
         input.value = '';
         return;

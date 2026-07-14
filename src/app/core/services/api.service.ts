@@ -13,7 +13,7 @@ export class ApiService {
   constructor(private http: HttpClient) {}
 
   private handleError(error: HttpErrorResponse): Observable<never> {
-    if (error.error instanceof ErrorEvent) {
+    if (typeof ErrorEvent !== 'undefined' && error.error instanceof ErrorEvent) {
       // Client-side error
       console.error('An error occurred:', error.error.message);
       return throwError(() => new Error(`Client error: ${error.error.message}`));

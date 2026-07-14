@@ -1,5 +1,5 @@
 .faq-section {
-  @apply bg-gray-50;
+  @apply bg-gradient-to-br from-gray-50 to-indigo-50 py-20;
 }
 
 .faq-header {
@@ -7,7 +7,7 @@
 }
 
 .faq-header h2 {
-  @apply text-4xl lg:text-5xl mb-4 text-blue-900;
+  @apply text-4xl lg:text-5xl mb-4 text-indigo-900 font-bold;
 }
 
 .faq-grid {
@@ -15,18 +15,44 @@
 }
 
 .faq-item {
-  @apply bg-white rounded-2xl p-6 lg:p-8 shadow-sm border border-gray-200 transition-all duration-300 cursor-pointer;
+  @apply bg-white rounded-2xl p-6 lg:p-8 shadow-sm border border-gray-200 transition-all duration-300 cursor-pointer overflow-hidden;
 }
 
 .faq-item:hover {
-  @apply shadow-md border-yellow-500;
+  @apply shadow-md border-amber-500/50 transform -translate-y-1;
+}
+
+.faq-item.expanded {
+  @apply shadow-lg border-amber-500;
 }
 
 .faq-question {
-  @apply flex justify-between items-center font-semibold text-lg text-blue-900;
+  @apply flex justify-between items-center font-semibold text-lg text-indigo-900 pr-4;
+  transition: color 0.3s ease;
+}
+
+.faq-item:hover .faq-question {
+  color: #4f46e5;
+}
+
+.faq-icon {
+  @apply text-2xl font-light text-amber-600 transition-transform duration-300 flex-shrink-0;
+}
+
+.faq-icon.expanded {
+  transform: rotate(180deg);
 }
 
 .faq-answer {
-  @apply text-gray-600 leading-relaxed mt-4 pt-4 border-t border-gray-200;
-  /* For a real app, this would be toggled via angular state */
+  @apply text-gray-600 leading-relaxed pt-4 border-t border-gray-200;
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.faq-answer.expanded {
+  max-height: 500px;
+  opacity: 1;
+  padding-top: 16px;
 }

@@ -20,6 +20,7 @@ export class ManageDownloads implements OnInit {
   downloadList = signal<Download[]>([]);
   isLoading = signal(false);
   isSaving = signal(false);
+  isUploading = signal(false);
   errorMessage = signal<string | null>(null);
   successMessage = signal<string | null>(null);
   viewMode = signal<ViewMode>('list');
@@ -61,6 +62,38 @@ export class ManageDownloads implements OnInit {
     this.viewMode.set('list');
     this.form = this.emptyForm();
     this.editingItem.set(null);
+  }
+
+  onFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files[0]) {
+      const file = input.files[0];
+      const maxSize = 10 * 1024 * 1024; // 10MB (Cloudinary free plan limit)
+      if (file.size > maxSize) {
+        this.errorMessage.set('File size exceeds 10MB limit. Please select a smaller file.');
+        setTimeout(() => this.errorMessage.set(null), 5000);
+        input.value = '';
+        return;
+      }
+      this.uploadFile(file);
+    }
+  }
+
+  uploadFile(file: File): void {
+    this.isUploading.set(true);
+    this.downloadService.uploadFile(file).subscribe({
+      next: (res) => {
+        this.form.fileUrl = res.url;
+        this.form.fileSize = file.size;
+        this.isUploading.set(false);
+        this.successMessage.set('File uploaded successfully!');
+        setTimeout(() => this.successMessage.set(null), 3000);
+      },
+      error: () => {
+        this.errorMessage.set('Failed to upload file');
+        this.isUploading.set(false);
+      }
+    });
   }
 
   saveForm(): void {

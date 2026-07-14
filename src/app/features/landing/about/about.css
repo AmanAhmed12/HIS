@@ -1,44 +1,303 @@
-.about-section {
-  @apply bg-white;
+/* Hero Section */
+.about-hero {
+  position: relative;
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  padding-top: 80px;
+  overflow: hidden;
 }
 
-.about-grid {
-  @apply grid grid-cols-1 lg:grid-cols-2 gap-16 items-center;
+.hero-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(30, 58, 138, 0.95) 0%, rgba(59, 130, 246, 0.9) 100%),
+              url('/images/hero-bg.png') center/cover no-repeat;
+  z-index: -1;
 }
 
-.about-image {
-  @apply w-full rounded-2xl shadow-xl;
+.hero-content {
+  max-width: 800px;
+  color: white;
+  animation: fadeInUp 1s ease-out;
 }
 
-.about-content h2 {
-  @apply text-4xl lg:text-5xl mb-6 text-blue-900;
+.hero-badge {
+  display: inline-block;
+  background: rgba(234, 179, 8, 0.2);
+  color: #fbbf24;
+  padding: 8px 20px;
+  border-radius: 50px;
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 24px;
+  border: 1px solid rgba(234, 179, 8, 0.3);
 }
 
-.about-content p {
-  @apply text-gray-600 leading-relaxed mb-6 text-lg;
+.hero-content h1 {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 800;
+  line-height: 1.1;
+  margin-bottom: 24px;
 }
 
-.mission-vision {
-  @apply flex gap-8 mt-8 flex-col lg:flex-row;
+.hero-content p {
+  font-size: 1.25rem;
+  line-height: 1.8;
+  color: rgba(255, 255, 255, 0.9);
+  max-width: 700px;
 }
 
-.mv-card {
-  @apply flex-1 bg-gray-50 p-6 border-l-4 border-yellow-500 rounded-r-xl;
+/* Vision & Mission */
+.vision-mission-section {
+  padding: 100px 0;
+  background: white;
 }
 
-.mv-card h4 {
-  @apply mb-2 text-xl text-blue-900 font-semibold;
+.vm-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 40px;
 }
 
-.mv-card p {
-  @apply text-base mb-0 text-gray-600;
+.vm-card {
+  padding: 48px;
+  border-radius: 24px;
+  transition: all 0.4s ease;
 }
 
-@media (max-width: 992px) {
-  .about-grid {
-    @apply grid-cols-1;
+.vm-card.vision {
+  background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+  color: white;
+}
+
+.vm-card.mission {
+  background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+  color: #1e3a8a;
+}
+
+.vm-icon {
+  font-size: 64px;
+  margin-bottom: 24px;
+}
+
+.vm-card h2 {
+  font-size: 2rem;
+  font-weight: 800;
+  margin-bottom: 20px;
+}
+
+.vm-card p {
+  font-size: 1.125rem;
+  line-height: 1.8;
+  opacity: 0.9;
+}
+
+/* Section Styles */
+section {
+  padding: 80px 0;
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.section-header h2 {
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 800;
+  color: #1e3a8a;
+  margin-bottom: 16px;
+}
+
+.section-header p {
+  font-size: 1.125rem;
+  color: #6b7280;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Achievements Section */
+.achievements-section {
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+}
+
+.achievements-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 32px;
+}
+
+.achievement-card {
+  background: white;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.4s ease;
+}
+
+.achievement-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+.achievement-image {
+  height: 200px;
+  background-size: cover;
+  background-position: center;
+}
+
+.achievement-content {
+  padding: 24px;
+}
+
+.achievement-content h3 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #1e3a8a;
+  margin-bottom: 12px;
+}
+
+.achievement-content p {
+  color: #6b7280;
+  line-height: 1.6;
+  margin-bottom: 12px;
+}
+
+.achievement-date {
+  font-size: 14px;
+  color: #9ca3af;
+}
+
+/* Facilities Section */
+.facilities-section {
+  background: white;
+}
+
+.facilities-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 32px;
+}
+
+.facility-card {
+  text-align: center;
+  padding: 40px;
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  border-radius: 20px;
+  transition: all 0.4s ease;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.facility-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+}
+
+.facility-icon {
+  font-size: 56px;
+  margin-bottom: 24px;
+}
+
+.facility-card h3 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #1e3a8a;
+  margin-bottom: 12px;
+}
+
+.facility-card p {
+  color: #6b7280;
+  line-height: 1.6;
+}
+
+/* Stats Section */
+.stats-section {
+  background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+  color: white;
+  padding: 100px 0;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 40px;
+}
+
+.stat-card {
+  text-align: center;
+}
+
+.stat-number {
+  font-size: 3.5rem;
+  font-weight: 800;
+  margin-bottom: 12px;
+  background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.stat-label {
+  font-size: 1.125rem;
+  font-weight: 600;
+  opacity: 0.9;
+}
+
+/* Loading State */
+.loading-state {
+  text-align: center;
+  padding: 40px;
+  color: #6b7280;
+  font-size: 1.125rem;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
   }
-  .mission-vision {
-    @apply flex-col gap-4;
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .hero-content h1 {
+    font-size: 2.5rem;
+  }
+
+  .hero-content p {
+    font-size: 1rem;
+  }
+
+  .vm-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .achievements-grid,
+  .facilities-grid,
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .stat-number {
+    font-size: 2.5rem;
+  }
+
+  section {
+    padding: 60px 0;
+  }
+
+  .vision-mission-section {
+    padding: 60px 0;
   }
 }

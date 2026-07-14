@@ -1,30 +1,34 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Manrope:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  /* Brand Colors for Hill Country International School */
-  --primary: #0a1f44;      /* Deep Royal Blue */
-  --primary-light: #163870;
-  --secondary: #d4af37;    /* Elegant Gold */
-  --secondary-hover: #b5952f;
+  /* Professional Education Color Palette */
+  --primary-navy: #0f172a;      /* Deep Navy Blue */
+  --primary-royal: #1e3a8a;     /* Royal Blue */
+  --primary-light: #3b82f6;     /* Bright Blue Accent */
+  
+  --accent-gold: #fbbf24;       /* Premium Gold */
+  --accent-emerald: #10b981;    /* Emerald Green for success/highlights */
+  --accent-cyan: #06b6d4;       /* Cyan for tech/modern touch */
   
   /* Neutral Palette */
-  --bg-color: #f8fafc;
-  --bg-surface: #ffffff;
-  --text-main: #1e293b;
-  --text-muted: #64748b;
+  --bg-color: #f8fafc;          /* Soft Gray Background */
+  --bg-surface: #ffffff;        /* White Surface */
+  --text-main: #1e293b;         /* Dark Gray Text */
+  --text-muted: #64748b;        /* Soft Gray Text */
   --border-color: #e2e8f0;
   
-  /* Utils */
-  --border-radius: 12px;
+  /* Utilities */
+  --border-radius: 16px;
   --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
   --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-  --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.05);
   --glass-bg: rgba(255, 255, 255, 0.85);
-  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --glass-border: 1px solid rgba(255, 255, 255, 0.3);
+  --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 * {
@@ -35,22 +39,37 @@
 
 html, body {
   height: 100%;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Manrope', 'Inter', sans-serif;
   color: var(--text-main);
   background-color: var(--bg-color);
   scroll-behavior: smooth;
   overflow-x: hidden;
 }
 
-h1, h2, h3, h4, h5, h6 {
-  font-family: 'Outfit', sans-serif;
-  color: var(--primary);
+h1:not([class*="text-"]),
+h2:not([class*="text-"]),
+h3:not([class*="text-"]),
+h4:not([class*="text-"]),
+h5:not([class*="text-"]),
+h6:not([class*="text-"]) {
+  font-family: 'Poppins', 'Inter', sans-serif;
+  color: var(--primary-navy);
   line-height: 1.2;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Poppins', 'Inter', sans-serif;
+  line-height: 1.2;
+  font-weight: 700;
+  letter-spacing: -0.02em;
 }
 
 a {
   text-decoration: none;
   color: inherit;
+  transition: var(--transition);
 }
 
 ul {
@@ -66,7 +85,7 @@ ul {
 }
 
 .section {
-  padding: 5rem 0;
+  padding: 6rem 0;
 }
 
 /* Global Buttons */
@@ -74,42 +93,76 @@ ul {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0.875rem 2rem;
-  font-family: 'Outfit', sans-serif;
+  padding: 0.875rem 2.5rem;
+  font-family: 'Inter', sans-serif;
   font-weight: 600;
   font-size: 1rem;
-  border-radius: 30px;
+  border-radius: var(--border-radius);
   cursor: pointer;
   transition: var(--transition);
   border: none;
+  letter-spacing: 0.01em;
 }
 
 .btn-primary {
-  background-color: var(--secondary);
+  background-color: var(--primary-royal);
   color: #fff;
-  box-shadow: 0 4px 14px rgba(212, 175, 55, 0.3);
+  box-shadow: 0 4px 14px rgba(30, 58, 138, 0.3);
 }
 
 .btn-primary:hover {
-  background-color: var(--secondary-hover);
+  background-color: var(--primary-navy);
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4);
+  box-shadow: 0 6px 20px rgba(15, 23, 42, 0.4);
 }
 
 .btn-outline {
   background-color: transparent;
-  color: var(--primary);
-  border: 2px solid var(--primary);
+  color: var(--primary-royal);
+  border: 2px solid var(--primary-royal);
 }
 
 .btn-outline:hover {
-  background-color: var(--primary);
+  background-color: var(--primary-royal);
   color: #fff;
 }
 
-/* Utility classes */
-.text-center { text-align: center; }
-.mb-1 { margin-bottom: 0.5rem; }
-.mb-2 { margin-bottom: 1rem; }
-.mb-4 { margin-bottom: 2rem; }
-.mt-4 { margin-top: 2rem; }
+.btn-accent {
+  background-color: var(--accent-gold);
+  color: var(--primary-navy);
+  box-shadow: 0 4px 14px rgba(251, 191, 36, 0.3);
+}
+
+.btn-accent:hover {
+  background-color: #f59e0b;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(245, 158, 11, 0.4);
+}
+
+/* Scroll Animations */
+.animate-on-scroll {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+              transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.animate-on-scroll.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Line clamp utilities */
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}

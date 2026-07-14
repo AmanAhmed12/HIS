@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -8,14 +8,14 @@ import { CommonModule } from '@angular/common';
   templateUrl: './downloads.html',
   styleUrl: './downloads.css'
 })
-export class Downloads {
+export class Downloads implements OnInit {
   downloadCategories: any[] = [];
-  hasLoaded = false;
+
+  ngOnInit(): void {
+    this.loadDownloads();
+  }
 
   loadDownloads() {
-    if (this.hasLoaded) return;
-    this.hasLoaded = true;
-
     // Mock data - will be replaced with API calls
     this.downloadCategories = [
       {
@@ -68,7 +68,8 @@ export class Downloads {
   }
 
   downloadFile(file: any) {
-    // Will be implemented with actual download logic
-    console.log('Downloading:', file.name);
+    if (file.url && file.url !== '#') {
+      window.open(file.url, '_blank');
+    }
   }
 }
