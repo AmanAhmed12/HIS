@@ -11,10 +11,16 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
   return next(req).pipe(
     catchError((error: HttpErrorResponse) => {
       if (error.status === 401) {
-        // Token expired or invalid — log out and redirect
+        // Token expired or invalid — log out and redirect to login
         authService.logout();
       } else if (error.status === 403) {
-        router.navigate(['/']);
+        // Forbidden — token may be expired or user lacks permission
+        // If it's an admin API call, clear the stale token and redirect to login
+        if (req.url.includes('/api/v1/admin/')) {
+          authService.logout();
+        } else {
+          router.navigate(['/']);
+        }
       } else if (error.status === 0) {
         console.error('Network error: Cannot reach the server.');
       }

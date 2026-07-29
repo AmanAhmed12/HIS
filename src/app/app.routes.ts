@@ -6,14 +6,8 @@ export const routes: Routes = [
   // Public routes
   {
     path: '',
+    pathMatch: 'full',
     loadComponent: () => import('./layouts/navbar/navbar').then(m => m.Navbar),
-    children: [
-      {
-        path: '',
-        redirectTo: 'home',
-        pathMatch: 'full'
-      }
-    ]
   },
 
   // Admin routes (protected)
